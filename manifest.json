@@ -1,14 +1,14 @@
 {
-  "name": "Investigação",
+  "name": "Jogo de Investigação",
   "short_name": "Investigação",
-  "start_url": "/investigacao-app/",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#020617",
   "theme_color": "#020617",
   "icons": [
     {
-      "src": "https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png",
-      "sizes": "512x512",
+      "src": "icon.png",
+      "sizes": "192x192",
       "type": "image/png"
     }
   ]
