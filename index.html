@@ -1,144 +1,129 @@
-<!DOCTYPE html><html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <title>Investigação</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <!-- PWA -->  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#020617" />  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .app {
-      max-width: 420px;
-      width: 100%;
-      background: #020617;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,.5);
-      overflow: hidden;
-    }
-    .cover {
-      height: 220px;
-      background: linear-gradient(135deg, #111827, #1f2933);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
-    .content {
-      padding: 20px;
-    }
-    .phrase {
-      background: #020617;
-      border-left: 4px solid #38bdf8;
-      padding: 12px;
-      margin-bottom: 20px;
-      font-style: italic;
-    }
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .btn-download {
-      background: #38bdf8;
-      color: #020617;
-    }
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .profile img {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      background: #111827;
-    }
-  </style></head>
-<body>
-  <div class="app">
-    <!-- Capa do jogo -->
-    <div class="cover" style="background-image:url('https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png'); background-size:cover; background-position:center;">
-    </div><div class="content">
-  <!-- Perfil do aplicativo -->
-  <div class="profile">
-    <img src="icone-app-exemplo.png" alt="Ícone do aplicativo (exemplo)" />
-    <div>
-      <strong>Investigação</strong><br />
-      <small>Jogo de mistério</small>
-    </div>
-  </div>
+<script>
+/* ===== JOGO DE INVESTIGAÇÃO ===== */
 
-  <!-- Frase simples de investigação -->
-  <div class="phrase">
-    "Cada pista encontrada revela uma nova mentira. Descubra a verdade."
-  </div>
+const game = {
+  step: 0,
+  answers: []
+};
 
-  <!-- Botões -->
-  <div class="buttons">
-    <button class="btn btn-download" onclick="downloadApp()">Baixar Aplicativo</button>
-    
-  </div>
-</div>
-
-  </div>  <script>
-    // Notificação ao entrar no jogo
-    window.onload = () => {
-      alert("Bem-vindo ao jogo INVESTIGAÇÃO");
-      showIntro();
-    };
-
-    function showIntro() {
-      const intro = document.createElement('div');
-      intro.style.position = 'fixed';
-      intro.style.top = '0';
-      intro.style.left = '0';
-      intro.style.width = '100%';
-      intro.style.height = '100%';
-      intro.style.background = "#000 url('https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png') center/cover no-repeat";
-      intro.style.zIndex = '9999';
-      intro.onclick = () => intro.remove();
-      document.body.appendChild(intro);
-    }
-
-    // Link de download (exemplo por enquanto)
-    let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-function downloadApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-    });
-  } else {
-    alert('Use o menu do navegador para instalar o aplicativo');
+const story = [
+  {
+    question: "Onde você decide investigar primeiro?",
+    options: [
+      { text: "Quarto da vítima", result: "No quarto, você encontra marcas de luta e um celular escondido." },
+      { text: "Cozinha", result: "Na cozinha, há um copo quebrado e vestígios de veneno." }
+    ]
+  },
+  {
+    question: "O celular encontrado contém:",
+    options: [
+      { text: "Mensagens ameaçadoras", result: "As mensagens indicam que alguém próximo estava sendo chantageado." },
+      { text: "Chamadas apagadas", result: "As chamadas levam a um número desconhecido registrado no prédio." }
+    ]
+  },
+  {
+    question: "Quem você interroga primeiro?",
+    options: [
+      { text: "Marido", result: "Ele demonstra nervosismo e muda a versão dos fatos." },
+      { text: "Melhor amiga", result: "Ela chora, mas comete contradições importantes." }
+    ]
+  },
+  {
+    question: "Uma nova pista surge:",
+    options: [
+      { text: "Câmeras de segurança", result: "As câmeras mostram alguém entrando pela porta dos fundos." },
+      { text: "Relatório médico", result: "O laudo indica morte provocada, não acidental." }
+    ]
+  },
+  {
+    question: "O horário da morte coincide com:",
+    options: [
+      { text: "Uma visita registrada", result: "O visitante não foi identificado oficialmente." },
+      { text: "Uma queda de energia", result: "A queda foi provocada propositalmente." }
+    ]
+  },
+  {
+    question: "Você descobre que:",
+    options: [
+      { text: "A vítima escondia um segredo", result: "Ela pretendia denunciar alguém próximo." },
+      { text: "Havia uma dívida alta", result: "O motivo financeiro se torna claro." }
+    ]
+  },
+  {
+    question: "Qual suspeito ganha força?",
+    options: [
+      { text: "Vizinho", result: "Ele tinha acesso à casa e um passado violento." },
+      { text: "Médico", result: "O médico alterou o primeiro laudo." }
+    ]
+  },
+  {
+    question: "Uma evidência final aponta para:",
+    options: [
+      { text: "Manipulação de provas", result: "Alguém tentou encobrir o crime." },
+      { text: "Crime planejado", result: "Nada foi acidental." }
+    ]
+  },
+  {
+    question: "Você confronta o principal suspeito:",
+    options: [
+      { text: "Pressionar psicologicamente", result: "Ele comete um erro grave ao responder." },
+      { text: "Mostrar as provas", result: "As provas são irrefutáveis." }
+    ]
+  },
+  {
+    question: "Conclusão da investigação:",
+    options: [
+      {
+        text: "Acusar o verdadeiro culpado",
+        result: "🔴 CULPADO REVELADO: A melhor amiga. Ela tentou silenciar Elisa antes da denúncia."
+      },
+      {
+        text: "Acusar o suspeito errado",
+        result: "❌ Caso encerrado incorretamente. O verdadeiro culpado continua livre."
+      }
+    ]
   }
+];
+
+function startGame() {
+  showStep();
 }
 
-    // Link da intro do jogo (exemplo por enquanto)
-    function openIntro() {
-      window.location.href = "#link-intro-exemplo";
-    }
-  </script></body>
-</html>
+function showStep() {
+  if (game.step >= story.length) return;
+
+  const step = story[game.step];
+  const box = document.createElement("div");
+
+  box.style.position = "fixed";
+  box.style.bottom = "0";
+  box.style.left = "0";
+  box.style.width = "100%";
+  box.style.background = "#020617";
+  box.style.padding = "16px";
+  box.style.zIndex = "9998";
+
+  box.innerHTML = `
+    <p><strong>${step.question}</strong></p>
+    ${step.options.map((o, i) =>
+      `<button style="margin:6px;padding:10px;border-radius:8px"
+        onclick="answer(${i})">${o.text}</button>`
+    ).join("")}
+  `;
+
+  document.body.appendChild(box);
+}
+
+function answer(index) {
+  const step = story[game.step];
+  alert(step.options[index].result);
+  game.step++;
+  document.querySelectorAll("div").forEach(d => {
+    if (d.style.zIndex === "9998") d.remove();
+  });
+  showStep();
+}
+
+/* Inicia o jogo após a intro */
+setTimeout(startGame, 1500);
+  </script>
