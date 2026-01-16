@@ -1,129 +1,234 @@
-<script>
-/* ===== JOGO DE INVESTIGAÇÃO ===== */
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo de Investigação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const game = {
-  step: 0,
-  answers: []
-};
+  <!-- ===== PWA ===== -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#020617">
 
-const story = [
-  {
-    question: "Onde você decide investigar primeiro?",
-    options: [
-      { text: "Quarto da vítima", result: "No quarto, você encontra marcas de luta e um celular escondido." },
-      { text: "Cozinha", result: "Na cozinha, há um copo quebrado e vestígios de veneno." }
-    ]
-  },
-  {
-    question: "O celular encontrado contém:",
-    options: [
-      { text: "Mensagens ameaçadoras", result: "As mensagens indicam que alguém próximo estava sendo chantageado." },
-      { text: "Chamadas apagadas", result: "As chamadas levam a um número desconhecido registrado no prédio." }
-    ]
-  },
-  {
-    question: "Quem você interroga primeiro?",
-    options: [
-      { text: "Marido", result: "Ele demonstra nervosismo e muda a versão dos fatos." },
-      { text: "Melhor amiga", result: "Ela chora, mas comete contradições importantes." }
-    ]
-  },
-  {
-    question: "Uma nova pista surge:",
-    options: [
-      { text: "Câmeras de segurança", result: "As câmeras mostram alguém entrando pela porta dos fundos." },
-      { text: "Relatório médico", result: "O laudo indica morte provocada, não acidental." }
-    ]
-  },
-  {
-    question: "O horário da morte coincide com:",
-    options: [
-      { text: "Uma visita registrada", result: "O visitante não foi identificado oficialmente." },
-      { text: "Uma queda de energia", result: "A queda foi provocada propositalmente." }
-    ]
-  },
-  {
-    question: "Você descobre que:",
-    options: [
-      { text: "A vítima escondia um segredo", result: "Ela pretendia denunciar alguém próximo." },
-      { text: "Havia uma dívida alta", result: "O motivo financeiro se torna claro." }
-    ]
-  },
-  {
-    question: "Qual suspeito ganha força?",
-    options: [
-      { text: "Vizinho", result: "Ele tinha acesso à casa e um passado violento." },
-      { text: "Médico", result: "O médico alterou o primeiro laudo." }
-    ]
-  },
-  {
-    question: "Uma evidência final aponta para:",
-    options: [
-      { text: "Manipulação de provas", result: "Alguém tentou encobrir o crime." },
-      { text: "Crime planejado", result: "Nada foi acidental." }
-    ]
-  },
-  {
-    question: "Você confronta o principal suspeito:",
-    options: [
-      { text: "Pressionar psicologicamente", result: "Ele comete um erro grave ao responder." },
-      { text: "Mostrar as provas", result: "As provas são irrefutáveis." }
-    ]
-  },
-  {
-    question: "Conclusão da investigação:",
-    options: [
-      {
-        text: "Acusar o verdadeiro culpado",
-        result: "🔴 CULPADO REVELADO: A melhor amiga. Ela tentou silenciar Elisa antes da denúncia."
-      },
-      {
-        text: "Acusar o suspeito errado",
-        result: "❌ Caso encerrado incorretamente. O verdadeiro culpado continua livre."
+  <!-- ===== CSS ===== -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.25s ease;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #020617, #000);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* ===== INTRO ===== */
+    .intro {
+      position: fixed;
+      inset: 0;
+      background: url("cover.jpg") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      animation: fadeOut 1s ease forwards;
+      animation-delay: 2.5s;
+    }
+
+    .intro::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+    }
+
+    .intro h1 {
+      position: relative;
+      z-index: 2;
+      font-size: 2rem;
+      text-shadow: 0 0 20px #38bdf8;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
       }
-    ]
-  }
-];
+    }
 
-function startGame() {
-  showStep();
-}
+    /* ===== APP ===== */
+    .app {
+      max-width: 420px;
+      margin: auto;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #020617, #020617ee);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      animation: fadeIn 0.8s ease;
+    }
 
-function showStep() {
-  if (game.step >= story.length) return;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-  const step = story[game.step];
-  const box = document.createElement("div");
+    /* ===== CAPA ===== */
+    .cover {
+      height: 180px;
+      background: url("cover.jpg") center/cover no-repeat;
+      box-shadow: inset 0 -60px 80px rgba(0,0,0,0.8);
+    }
 
-  box.style.position = "fixed";
-  box.style.bottom = "0";
-  box.style.left = "0";
-  box.style.width = "100%";
-  box.style.background = "#020617";
-  box.style.padding = "16px";
-  box.style.zIndex = "9998";
+    .profile {
+      text-align: center;
+      margin-top: -50px;
+    }
 
-  box.innerHTML = `
-    <p><strong>${step.question}</strong></p>
-    ${step.options.map((o, i) =>
-      `<button style="margin:6px;padding:10px;border-radius:8px"
-        onclick="answer(${i})">${o.text}</button>`
-    ).join("")}
-  `;
+    .profile img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid #020617;
+      box-shadow: 0 0 15px rgba(56,189,248,0.6);
+    }
 
-  document.body.appendChild(box);
-}
+    h2 {
+      margin-top: 10px;
+    }
 
-function answer(index) {
-  const step = story[game.step];
-  alert(step.options[index].result);
-  game.step++;
-  document.querySelectorAll("div").forEach(d => {
-    if (d.style.zIndex === "9998") d.remove();
-  });
-  showStep();
-}
+    .phrase {
+      color: #c7d2fe;
+      margin: 10px;
+    }
 
-/* Inicia o jogo após a intro */
-setTimeout(startGame, 1500);
+    /* ===== BOTÕES ===== */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+    }
+
+    .btn {
+      padding: 14px;
+      border-radius: 18px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-intro {
+      background: transparent;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+
+    .btn-intro:hover {
+      background: #38bdf8;
+      color: #020617;
+    }
+
+    .btn-play {
+      background: #38bdf8;
+      color: #020617;
+      box-shadow: 0 0 20px rgba(56,189,248,0.7);
+    }
+
+    /* ===== JOGO ===== */
+    [data-game-box] {
+      padding: 20px;
+      border-top: 2px solid #38bdf8;
+    }
+
+    [data-game-box] button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      background: #111827;
+      color: #e5e7eb;
+      border: 1px solid #38bdf8;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    [data-game-box] button:hover {
+      background: #38bdf8;
+      color: #020617;
+    }
+
+    small {
+      color: #94a3b8;
+      display: block;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <h1>Jogo de Investigação</h1>
+  </div>
+
+  <!-- APP -->
+  <div class="app">
+    <div class="cover"></div>
+
+    <div class="profile">
+      <img src="icon.png" alt="Perfil">
+      <h2>Investigação Criminal</h2>
+      <p class="phrase">Descubra a verdade por trás do caso.</p>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-play" onclick="startGame()">Iniciar Investigação</button>
+      <button class="btn btn-intro" id="installBtn" hidden>Instalar App</button>
+    </div>
+
+    <small>© Jogo Interativo</small>
+  </div>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    /* ===== PWA ===== */
+    let deferredPrompt;
+    const installBtn = document.getElementById("installBtn");
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.hidden = false;
+    });
+
+    installBtn.addEventListener("click", async () => {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    });
+
+    /* ===== JOGO ===== */
+    function startGame() {
+      const box = document.createElement("div");
+      box.setAttribute("data-game-box", "true");
+
+      box.innerHTML = `
+        <h3>🕵️ Caso 01</h3>
+        <p>Elisa desapareceu misteriosamente. O que você faz primeiro?</p>
+        <button onclick="alert('Você foi até a casa dela')">Investigar a casa</button>
+        <button onclick="alert('Você interrogou os amigos')">Interrogar amigos</button>
+      `;
+
+      document.querySelector(".app").appendChild(box);
+    }
   </script>
+
+</body>
+</html>
