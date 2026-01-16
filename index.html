@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Investigação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .app {
+      max-width: 420px;
+      width: 100%;
+      background: #020617;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.5);
+      overflow: hidden;
+    }
+    .cover {
+      height: 220px;
+      background: linear-gradient(135deg, #111827, #1f2933);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .cover h1 {
+      font-size: 28px;
+      letter-spacing: 1px;
+    }
+    .content {
+      padding: 20px;
+    }
+    .phrase {
+      background: #020617;
+      border-left: 4px solid #38bdf8;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-download {
+      background: #38bdf8;
+      color: #020617;
+    }
+    .btn-intro {
+      background: #020617;
+      color: #e5e7eb;
+      border: 1px solid #38bdf8;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .profile img {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: #111827;
+    }
+    .profile div {
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Capa do jogo -->
+    <div class="cover">
+      <h1>INVESTIGAÇÃO</h1>
+    </div><div class="content">
+  <!-- Perfil do aplicativo -->
+  <div class="profile">
+    <img src="icone-app-exemplo.png" alt="Ícone do aplicativo (exemplo)" />
+    <div>
+      <strong>Investigação</strong><br />
+      <small>Jogo de mistério</small>
+    </div>
+  </div>
+
+  <!-- Frase simples de investigação -->
+  <div class="phrase">
+    "Cada pista encontrada revela uma nova mentira. Descubra a verdade."
+  </div>
+
+  <!-- Botões -->
+  <div class="buttons">
+    <button class="btn btn-download" onclick="downloadApp()">Baixar Aplicativo</button>
+    <button class="btn btn-intro" onclick="openIntro()">Intro do Jogo</button>
+  </div>
+</div>
+
+  </div>  <script>
+    // Notificação ao entrar no jogo
+    window.onload = () => {
+      alert("Bem-vindo ao jogo INVESTIGAÇÃO");
+    };
+
+    // Link de download (exemplo por enquanto)
+    function downloadApp() {
+      window.location.href = "#link-download-exemplo";
+    }
+
+    // Link da intro do jogo (exemplo por enquanto)
+    function openIntro() {
+      window.location.href = "#link-intro-exemplo";
+    }
+  </script></body>
+  </html>
