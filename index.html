@@ -87,8 +87,7 @@
 <body>
   <div class="app">
     <!-- Capa do jogo -->
-    <div class="cover">
-      <h1>INVESTIGAÇÃO</h1>
+    <div class="cover" style="background-image:url('https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png'); background-size:cover; background-position:center;">
     </div><div class="content">
   <!-- Perfil do aplicativo -->
   <div class="profile">
@@ -107,7 +106,7 @@
   <!-- Botões -->
   <div class="buttons">
     <button class="btn btn-download" onclick="downloadApp()">Baixar Aplicativo</button>
-    <button class="btn btn-intro" onclick="openIntro()">Intro do Jogo</button>
+    
   </div>
 </div>
 
@@ -115,7 +114,21 @@
     // Notificação ao entrar no jogo
     window.onload = () => {
       alert("Bem-vindo ao jogo INVESTIGAÇÃO");
+      showIntro();
     };
+
+    function showIntro() {
+      const intro = document.createElement('div');
+      intro.style.position = 'fixed';
+      intro.style.top = '0';
+      intro.style.left = '0';
+      intro.style.width = '100%';
+      intro.style.height = '100%';
+      intro.style.background = "#000 url('https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png') center/cover no-repeat";
+      intro.style.zIndex = '9999';
+      intro.onclick = () => intro.remove();
+      document.body.appendChild(intro);
+    }
 
     // Link de download (exemplo por enquanto)
     function downloadApp() {
@@ -127,4 +140,4 @@
       window.location.href = "#link-intro-exemplo";
     }
   </script></body>
-  </html>
+</html>
