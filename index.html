@@ -23,8 +23,9 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 .btn-option{background:#111827;color:#e5e7eb;border:1px solid #38bdf8}
 .btn-option:hover{background:#38bdf8;color:#020617}
 .game-box{padding:20px;border-top:2px solid #38bdf8;animation:fadeIn .4s ease;text-align:center}
+.game-box img{width:100%;border-radius:12px;margin:10px 0;border:2px solid #38bdf8}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-#btnInstall{display:none;margin-top:15px}
+#btnInstall{display:none}
 
 /* ESCONDER BOTÃO DO DOSSIÊ NA HOME */
 .content .btn-option{display:none}
@@ -47,7 +48,6 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 <h2>Caso 01 — O Desaparecimento de Elisa</h2>
 <p>Cada escolha pode revelar… ou esconder a verdade.</p>
 <button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
-<button class="btn btn-option" onclick="abrirDossie()">📂 Abrir Dossiê</button>
 <button id="btnInstall" class="btn btn-option">📥 Instalar Aplicativo</button>
 </div>
 </div>
@@ -58,50 +58,52 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 
 <script>
 const historia=[
-"Elisa desapareceu numa noite fria e silenciosa.",
-"Ela parecia nervosa nos últimos dias.",
-"O celular encontrado escondia conversas comprometedoras.",
-"Cinco pessoas próximas tinham motivos para mentir.",
-"Você deve entender a história entre cada um deles e a vítima."
+{
+texto:"Elisa desapareceu numa noite fria e silenciosa.",
+img:"https://i.ibb.co/3c2d8nY/cena-crime.jpg"
+},
+{
+texto:"O quarto da vítima estava revirado, mas sem sinais de arrombamento.",
+img:"https://i.ibb.co/ZV0wWqN/quarto-vitima.jpg"
+},
+{
+texto:"O celular de Elisa foi encontrado escondido atrás do guarda-roupa.",
+img:"https://i.ibb.co/D9FzR5S/celular-vitima.jpg"
+},
+{
+texto:"Mensagens apagadas indicam que alguém próximo a ameaçava.",
+img:null
+},
+{
+texto:"Agora, você deve interrogar os suspeitos.",
+img:null
+}
 ];
 
 let step=0;
-let correctAnswers=0;
-let dossieObrigatorio=true;
+let culpado=null;
 
-/* GAME ORIGINAL CONTINUA IGUAL */
-
-/* DOSSIÊ COM IMAGENS */
+/* DOSSIÊ */
 const dossieData=[
-{
-nome:"Vítima — Elisa",
-img:"https://i.ibb.co/2kQFZtJ/vitima.jpg",
-texto:"Elisa, 24 anos. Inteligente, reservada e temia que alguém próximo estivesse tentando prejudicá-la."
-},
 {
 nome:"Melhor Amiga",
 img:"https://i.ibb.co/Nxv9L3g/amiga.jpg",
-texto:"Inveja crescente e medo de ser denunciada por traições e mentiras."
+texto:"Diz que não viu Elisa na noite do desaparecimento."
 },
 {
 nome:"Ex-namorado",
 img:"https://i.ibb.co/8dRZLkN/ex.jpg",
-texto:"Relacionamento abusivo. Não aceitava o término."
+texto:"Afirma que estava em casa, mas não apresenta provas."
 },
 {
 nome:"Colega de Trabalho",
 img:"https://i.ibb.co/k2kC8Xk/colega.jpg",
-texto:"Elisa descobriu um esquema ilegal dentro da empresa."
+texto:"Fica nervoso ao ser questionado sobre o celular."
 },
 {
 nome:"Vizinho",
 img:"https://i.ibb.co/FgZ9X3h/vizinho.jpg",
-texto:"Observava a rotina da vítima e ouviu discussões na noite do desaparecimento."
-},
-{
-nome:"Irmão",
-img:"https://i.ibb.co/4PqzLzT/irmao.jpg",
-texto:"Conflito por herança e ressentimentos antigos."
+texto:"Relata gritos vindos do apartamento de Elisa."
 }
 ];
 
@@ -114,10 +116,7 @@ renderDossie();
 
 function fecharDossie(){
 document.getElementById("dossie").style.display="none";
-if(dossieObrigatorio){
-dossieObrigatorio=false;
-showStep();
-}
+interrogatorio();
 }
 
 function renderDossie(){
@@ -128,22 +127,62 @@ document.getElementById("dossieBox").innerHTML=`
 <p>${d.texto}</p>
 <button class="btn btn-option" onclick="dIndex>0&&dIndex--;renderDossie()">⬅</button>
 <button class="btn btn-option" onclick="dIndex<dossieData.length-1&&dIndex++;renderDossie()">➡</button>
-<button class="btn btn-primary" onclick="fecharDossie()">Fechar Dossiê</button>
+<button class="btn btn-primary" onclick="fecharDossie()">Interrogar</button>
 `;
 }
 
-function startGame(){step=0;correctAnswers=0;mostrarHistoria(0)}
+function startGame(){
+document.querySelector(".content").style.display="none";
+mostrarHistoria(0);
+}
 
 function mostrarHistoria(i){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
-box.innerHTML=`<p>${historia[i]}</p><button class="btn btn-primary">${i<historia.length-1?"Continuar":"Analisar Suspeitos"}</button>`;
+box.innerHTML=`
+<p>${historia[i].texto}</p>
+${historia[i].img?`<img src="${historia[i].img}">`:""}
+<button class="btn btn-primary">${i<historia.length-1?"Continuar":"Abrir Dossiê"}</button>
+`;
 app.appendChild(box);
 box.querySelector("button").onclick=()=>{
 box.remove();
 i<historia.length-1?mostrarHistoria(i+1):abrirDossie();
 }
+}
+
+/* INTERROGATÓRIO */
+function interrogatorio(){
+const app=document.querySelector(".app");
+const box=document.createElement("div");
+box.className="game-box";
+box.innerHTML=`
+<h3>Quem é o culpado?</h3>
+<button class="btn btn-option" onclick="final(false)">Melhor Amiga</button>
+<button class="btn btn-option" onclick="final(false)">Ex-namorado</button>
+<button class="btn btn-option" onclick="final(true)">Colega de Trabalho</button>
+<button class="btn btn-option" onclick="final(false)">Vizinho</button>
+`;
+app.appendChild(box);
+}
+
+/* FINAL */
+function final(acertou){
+const app=document.querySelector(".app");
+const box=document.createElement("div");
+box.className="game-box";
+box.innerHTML=acertou?`
+<h2>✅ Caso Resolvido</h2>
+<p>O colega de trabalho foi preso. Elisa descobriu um esquema ilegal e foi silenciada.</p>
+<p>Parabéns, investigador.</p>
+`:
+`
+<h2>❌ Investigação Falhou</h2>
+<p>O verdadeiro culpado escapou.</p>
+<p>Tente novamente.</p>
+`;
+app.appendChild(box);
 }
 </script>
 
