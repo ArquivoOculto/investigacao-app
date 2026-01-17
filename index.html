@@ -1,297 +1,163 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Investigação Criminal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Investigação Criminal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#020617">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#020617">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: radial-gradient(circle at top, #020617, #000);
-      color: #e5e7eb;
-    }
-
-    .intro {
-      position: fixed;
-      inset: 0;
-      background: url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9;
-      animation: fadeOut 1s ease forwards;
-      animation-delay: 2.5s;
-    }
-
-    .intro::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,.7);
-    }
-
-    .intro h1 {
-      position: relative;
-      z-index: 1;
-      font-size: 2rem;
-      text-shadow: 0 0 20px #38bdf8;
-    }
-
-    @keyframes fadeOut {
-      to { opacity: 0; visibility: hidden; }
-    }
-
-    .app {
-      max-width: 420px;
-      margin: auto;
-      min-height: 100vh;
-      background: #020617;
-      border-radius: 18px;
-      overflow: hidden;
-    }
-
-    .cover {
-      height: 180px;
-      background: url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;
-    }
-
-    .content {
-      padding: 20px;
-      text-align: center;
-    }
-
-    .btn {
-      width: 100%;
-      margin-top: 10px;
-      padding: 14px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-primary {
-      background: #38bdf8;
-      color: #020617;
-    }
-
-    .btn-option {
-      background: #111827;
-      color: #e5e7eb;
-      border: 1px solid #38bdf8;
-    }
-
-    .btn-option:hover {
-      background: #38bdf8;
-      color: #020617;
-    }
-
-    .game-box {
-      padding: 20px;
-      border-top: 2px solid #38bdf8;
-      animation: fadeIn .4s ease;
-      text-align: center;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    #btnInstall {
-      display: none;
-      margin-top: 15px;
-    }
-  </style>
+<style>
+*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7eb}
+.intro{position:fixed;inset:0;background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;display:flex;align-items:center;justify-content:center;z-index:9;animation:fadeOut 1s ease forwards;animation-delay:2.5s}
+.intro::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.7)}
+.intro h1{position:relative;z-index:1;font-size:2rem;text-shadow:0 0 20px #38bdf8}
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+.app{max-width:420px;margin:auto;min-height:100vh;background:#020617;border-radius:18px;overflow:hidden}
+.cover{height:180px;background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat}
+.content{padding:20px;text-align:center}
+.btn{width:100%;margin-top:10px;padding:14px;border-radius:14px;border:none;cursor:pointer;font-weight:bold}
+.btn-primary{background:#38bdf8;color:#020617}
+.btn-option{background:#111827;color:#e5e7eb;border:1px solid #38bdf8}
+.btn-option:hover{background:#38bdf8;color:#020617}
+.game-box{padding:20px;border-top:2px solid #38bdf8;animation:fadeIn .4s ease;text-align:center}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#btnInstall{display:none;margin-top:15px}
+</style>
 </head>
 
 <body>
 
-<div class="intro">
-  <h1>Investigação Criminal</h1>
-</div>
+<div class="intro"><h1>Investigação Criminal</h1></div>
 
 <div class="app">
-  <div class="cover"></div>
-
-  <div class="content">
-    <h2>Caso 01 — O Desaparecimento de Elisa</h2>
-    <p>Cada escolha pode revelar… ou esconder a verdade.</p>
-
-    <button class="btn btn-primary" onclick="startGame()">
-      Iniciar Investigação
-    </button>
-
-    <button id="btnInstall" class="btn btn-option">
-      📥 Instalar Aplicativo
-    </button>
-  </div>
+<div class="cover"></div>
+<div class="content">
+<h2>Caso 01 — O Desaparecimento de Elisa</h2>
+<p>Cada escolha pode revelar… ou esconder a verdade.</p>
+<button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
+<button id="btnInstall" class="btn btn-option">📥 Instalar Aplicativo</button>
+</div>
 </div>
 
 <script>
-/* ===== HISTÓRIA ===== */
-
-const historia = [
-  "Elisa desapareceu numa noite fria e silenciosa.",
-  "Seu celular foi encontrado desligado em seu quarto.",
-  "Mensagens recentes indicam que ela estava com medo.",
-  "Você é o investigador responsável por descobrir a verdade."
+const historia=[
+"Elisa desapareceu numa noite fria e silenciosa.",
+"Seu celular foi encontrado desligado em seu quarto.",
+"Mensagens recentes indicam que ela estava com medo.",
+"Cinco pessoas próximas se tornam suspeitas.",
+"Você precisa interrogar todos com cuidado."
 ];
 
-/* ===== JOGO + INTERROGATÓRIO ===== */
+let step=0;
+let correctAnswers=0;
 
-let step = 0;
-let correctAnswers = 0;
+const game=[
+{q:"Por onde você começa a investigação?",
+options:[
+{t:"Analisar o quarto",c:true,r:"Há sinais de luta."},
+{t:"Ignorar o quarto",c:false,r:"Uma pista foi perdida."}
+]},
+{q:"O celular revela:",
+options:[
+{t:"Mensagens ameaçadoras",c:true,r:"Vêm de alguém próximo."},
+{t:"Nada importante",c:false,r:"Você ignora provas."}
+]},
 
-const game = [
-  {
-    q: "Por onde você começa a investigação?",
-    options: [
-      { t: "Analisar o quarto de Elisa", c: true, r: "Você encontra sinais de luta e um celular escondido." },
-      { t: "Ignorar o quarto", c: false, r: "Você perde uma pista importante." }
-    ]
-  },
-  {
-    q: "O celular revela:",
-    options: [
-      { t: "Mensagens ameaçadoras", c: true, r: "As mensagens vieram de alguém próximo." },
-      { t: "Nada relevante", c: false, r: "Você ignora informações cruciais." }
-    ]
-  },
+/* SUSPEITO 1 */
+{q:"Interrogatório — Melhor amiga",
+options:[
+{t:"Confrontar contradições",c:true,r:"Ela entra em pânico."},
+{t:"Acreditar na versão",c:false,r:"Ela esconde algo."}
+]},
 
-  /* ===== INTERROGATÓRIO ===== */
-  {
-    q: "INTERROGATÓRIO — Melhor amiga de Elisa:",
-    options: [
-      { t: "Perguntar onde ela estava na noite do desaparecimento", c: true, r: "Ela hesita e muda a versão dos fatos." },
-      { t: "Fazer perguntas genéricas", c: false, r: "Ela permanece calma demais." }
-    ]
-  },
-  {
-    q: "Durante o interrogatório, você percebe:",
-    options: [
-      { t: "Contradições no depoimento", c: true, r: "Ela entra em pânico ao ser confrontada." },
-      { t: "Nenhum erro aparente", c: false, r: "Você deixa passar uma grande mentira." }
-    ]
-  },
-  {
-    q: "Você pressiona a suspeita com as provas?",
-    options: [
-      { t: "Sim, apresento mensagens e horários", c: true, r: "Ela admite ter discutido com Elisa." },
-      { t: "Não, encerro o interrogatório", c: false, r: "Ela se livra da pressão." }
-    ]
-  },
+/* SUSPEITO 2 */
+{q:"Interrogatório — Ex-namorado",
+options:[
+{t:"Questionar o álibi",c:true,r:"O álibi é falso."},
+{t:"Encerrar rápido",c:false,r:"Ele se livra fácil."}
+]},
 
-  /* ===== FINAL ===== */
-  {
-    q: "Conclusão final:",
-    options: [
-      { t: "Acusar a melhor amiga", c: true, r: "🔴 CULPADA REVELADA: Crime motivado por inveja e medo." },
-      { t: "Acusar o vizinho", c: false, r: "❌ Provas insuficientes. O caso falha." }
-    ]
-  }
+/* SUSPEITO 3 */
+{q:"Interrogatório — Colega de trabalho",
+options:[
+{t:"Perguntar sobre ameaças",c:true,r:"Ele confirma brigas recentes."},
+{t:"Ignorar histórico",c:false,r:"Você perde contexto."}
+]},
+
+/* SUSPEITO 4 */
+{q:"Interrogatório — Vizinho",
+options:[
+{t:"Mostrar imagens de câmeras",c:true,r:"Ele mente sobre horários."},
+{t:"Aceitar explicação",c:false,r:"Uma mentira passa."}
+]},
+
+/* SUSPEITO 5 */
+{q:"Interrogatório — Irmão",
+options:[
+{t:"Confrontar ligações apagadas",c:true,r:"Ele confirma discussão."},
+{t:"Não pressionar",c:false,r:"Ele omite algo."}
+]},
+
+/* FINAL */
+{q:"Conclusão final",
+options:[
+{t:"Acusar a melhor amiga",c:true,r:"🔴 CULPADA: Planejou o crime por inveja."},
+{t:"Acusar outro suspeito",c:false,r:"❌ O verdadeiro culpado escapa."}
+]}
 ];
 
-/* ===== FUNÇÕES ===== */
-
-function startGame() {
-  step = 0;
-  correctAnswers = 0;
-  mostrarHistoria(0);
+function startGame(){step=0;correctAnswers=0;mostrarHistoria(0)}
+function mostrarHistoria(i){
+const app=document.querySelector(".app");
+const box=document.createElement("div");
+box.className="game-box";
+box.innerHTML=`<p>${historia[i]}</p><button class="btn btn-primary">${i<historia.length-1?"Continuar":"Começar investigação"}</button>`;
+app.appendChild(box);
+box.querySelector("button").onclick=()=>{box.remove();i<historia.length-1?mostrarHistoria(i+1):showStep()}
 }
 
-function mostrarHistoria(index) {
-  const app = document.querySelector(".app");
-  const box = document.createElement("div");
-  box.className = "game-box";
-
-  box.innerHTML = `
-    <p>${historia[index]}</p>
-    <button class="btn btn-primary">
-      ${index < historia.length - 1 ? "Continuar" : "Começar investigação"}
-    </button>
-  `;
-
-  app.appendChild(box);
-
-  box.querySelector("button").onclick = () => {
-    box.remove();
-    index < historia.length - 1 ? mostrarHistoria(index + 1) : showStep();
-  };
+function showStep(){
+const app=document.querySelector(".app");
+const box=document.createElement("div");
+box.className="game-box";
+const current=game[step];
+let html=`<h3>${current.q}</h3>`;
+current.options.forEach((o,i)=>html+=`<button class="btn btn-option" onclick="answer(${i})">${o.t}</button>`);
+box.innerHTML=html;
+app.appendChild(box);
 }
 
-function showStep() {
-  const app = document.querySelector(".app");
-  const box = document.createElement("div");
-  box.className = "game-box";
-
-  const current = game[step];
-  let html = `<h3>${current.q}</h3>`;
-
-  current.options.forEach((opt, i) => {
-    html += `<button class="btn btn-option" onclick="answer(${i})">${opt.t}</button>`;
-  });
-
-  box.innerHTML = html;
-  app.appendChild(box);
+function answer(i){
+const current=game[step];
+alert(current.options[i].r);
+if(current.options[i].c)correctAnswers++;
+document.querySelector(".game-box").remove();
+step++;
+step<game.length?showStep():endGame();
 }
 
-function answer(index) {
-  const current = game[step];
-  alert(current.options[index].r);
-
-  if (current.options[index].c) correctAnswers++;
-
-  document.querySelector(".game-box").remove();
-  step++;
-
-  step < game.length ? showStep() : endGame();
+function endGame(){
+const app=document.querySelector(".app");
+const box=document.createElement("div");
+box.className="game-box";
+box.innerHTML=`<h3>Resultado Final</h3>
+<p>${correctAnswers>=7?"🕵️ Caso resolvido. O culpado foi preso.":"❌ Investigação falhou. Provas insuficientes."}</p>
+<button class="btn btn-primary" onclick="location.reload()">Jogar novamente</button>`;
+app.appendChild(box);
 }
 
-function endGame() {
-  const app = document.querySelector(".app");
-  const box = document.createElement("div");
-  box.className = "game-box";
-
-  box.innerHTML = `
-    <h3>Resultado Final</h3>
-    <p>${correctAnswers >= 5
-      ? "🕵️ Caso resolvido com sucesso. O culpado foi preso."
-      : "❌ Investigação falhou. O culpado escapou."}
-    </p>
-    <button class="btn btn-primary" onclick="location.reload()">
-      Jogar novamente
-    </button>
-  `;
-
-  app.appendChild(box);
-}
-
-/* ===== PWA ===== */
-
+/* PWA */
 let deferredPrompt;
-const installBtn = document.getElementById("btnInstall");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "block";
+const installBtn=document.getElementById("btnInstall");
+window.addEventListener("beforeinstallprompt",e=>{
+e.preventDefault();
+deferredPrompt=e;
+installBtn.style.display="block";
 });
-
-installBtn.addEventListener("click", async () => {
-  deferredPrompt.prompt();
-  deferredPrompt = null;
-});
+installBtn.addEventListener("click",()=>{deferredPrompt.prompt();deferredPrompt=null});
 </script>
 
 </body>
