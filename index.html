@@ -103,12 +103,6 @@
       text-align: center;
     }
 
-    .game-box p {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -123,7 +117,6 @@
 
 <body>
 
-<!-- INTRO -->
 <div class="intro">
   <h1>Investigação Criminal</h1>
 </div>
@@ -140,7 +133,7 @@
     </button>
 
     <button id="btnInstall" class="btn btn-option">
-      📥 Instalar HydraFilmes
+      📥 Instalar Aplicativo
     </button>
   </div>
 </div>
@@ -155,45 +148,56 @@ const historia = [
   "Você é o investigador responsável por descobrir a verdade."
 ];
 
-/* ===== JOGO ===== */
+/* ===== JOGO + INTERROGATÓRIO ===== */
 
 let step = 0;
 let correctAnswers = 0;
 
 const game = [
   {
-    q: "Elisa desapareceu. Onde você investiga primeiro?",
+    q: "Por onde você começa a investigação?",
     options: [
-      { t: "Quarto da vítima", c: true, r: "Você encontra marcas de luta e um celular escondido." },
-      { t: "Cozinha", c: false, r: "Nada relevante além de um copo lavado." }
+      { t: "Analisar o quarto de Elisa", c: true, r: "Você encontra sinais de luta e um celular escondido." },
+      { t: "Ignorar o quarto", c: false, r: "Você perde uma pista importante." }
     ]
   },
   {
     q: "O celular revela:",
     options: [
-      { t: "Mensagens ameaçadoras", c: true, r: "As mensagens indicam alguém próximo." },
-      { t: "Fotos antigas", c: false, r: "As fotos não ajudam na investigação." }
+      { t: "Mensagens ameaçadoras", c: true, r: "As mensagens vieram de alguém próximo." },
+      { t: "Nada relevante", c: false, r: "Você ignora informações cruciais." }
+    ]
+  },
+
+  /* ===== INTERROGATÓRIO ===== */
+  {
+    q: "INTERROGATÓRIO — Melhor amiga de Elisa:",
+    options: [
+      { t: "Perguntar onde ela estava na noite do desaparecimento", c: true, r: "Ela hesita e muda a versão dos fatos." },
+      { t: "Fazer perguntas genéricas", c: false, r: "Ela permanece calma demais." }
     ]
   },
   {
-    q: "Quem você interroga primeiro?",
+    q: "Durante o interrogatório, você percebe:",
     options: [
-      { t: "Melhor amiga", c: true, r: "Ela se contradiz várias vezes." },
-      { t: "Vizinho", c: false, r: "O vizinho não estava na cidade." }
+      { t: "Contradições no depoimento", c: true, r: "Ela entra em pânico ao ser confrontada." },
+      { t: "Nenhum erro aparente", c: false, r: "Você deixa passar uma grande mentira." }
     ]
   },
   {
-    q: "Nova pista surge:",
+    q: "Você pressiona a suspeita com as provas?",
     options: [
-      { t: "Câmeras de segurança", c: true, r: "As imagens mostram alguém conhecido entrando." },
-      { t: "Relato anônimo", c: false, r: "O relato é falso." }
+      { t: "Sim, apresento mensagens e horários", c: true, r: "Ela admite ter discutido com Elisa." },
+      { t: "Não, encerro o interrogatório", c: false, r: "Ela se livra da pressão." }
     ]
   },
+
+  /* ===== FINAL ===== */
   {
     q: "Conclusão final:",
     options: [
-      { t: "Acusar a melhor amiga", c: true, r: "🔴 CULPADA REVELADA: Ela tentou silenciar Elisa." },
-      { t: "Acusar o vizinho", c: false, r: "❌ O verdadeiro culpado continua livre." }
+      { t: "Acusar a melhor amiga", c: true, r: "🔴 CULPADA REVELADA: Crime motivado por inveja e medo." },
+      { t: "Acusar o vizinho", c: false, r: "❌ Provas insuficientes. O caso falha." }
     ]
   }
 ];
@@ -208,7 +212,6 @@ function startGame() {
 
 function mostrarHistoria(index) {
   const app = document.querySelector(".app");
-
   const box = document.createElement("div");
   box.className = "game-box";
 
@@ -223,11 +226,7 @@ function mostrarHistoria(index) {
 
   box.querySelector("button").onclick = () => {
     box.remove();
-    if (index < historia.length - 1) {
-      mostrarHistoria(index + 1);
-    } else {
-      showStep();
-    }
+    index < historia.length - 1 ? mostrarHistoria(index + 1) : showStep();
   };
 }
 
@@ -256,11 +255,7 @@ function answer(index) {
   document.querySelector(".game-box").remove();
   step++;
 
-  if (step < game.length) {
-    showStep();
-  } else {
-    endGame();
-  }
+  step < game.length ? showStep() : endGame();
 }
 
 function endGame() {
@@ -270,9 +265,9 @@ function endGame() {
 
   box.innerHTML = `
     <h3>Resultado Final</h3>
-    <p>${correctAnswers >= 4
-      ? "🕵️ Você resolveu o caso corretamente e revelou o culpado."
-      : "❌ Você seguiu pistas erradas. O culpado escapou."}
+    <p>${correctAnswers >= 5
+      ? "🕵️ Caso resolvido com sucesso. O culpado foi preso."
+      : "❌ Investigação falhou. O culpado escapou."}
     </p>
     <button class="btn btn-primary" onclick="location.reload()">
       Jogar novamente
@@ -282,7 +277,7 @@ function endGame() {
   app.appendChild(box);
 }
 
-/* ===== BOTÃO INSTALAR PWA ===== */
+/* ===== PWA ===== */
 
 let deferredPrompt;
 const installBtn = document.getElementById("btnInstall");
@@ -294,11 +289,8 @@ window.addEventListener("beforeinstallprompt", (e) => {
 });
 
 installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
   deferredPrompt = null;
-  installBtn.style.display = "none";
 });
 </script>
 
