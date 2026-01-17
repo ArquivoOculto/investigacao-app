@@ -5,31 +5,54 @@
 <title>Investigação Criminal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#020617">
-
 <style>
 *{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
 body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7eb}
-.intro{position:fixed;inset:0;background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;display:flex;align-items:center;justify-content:center;z-index:9;animation:fadeOut 1s ease forwards;animation-delay:2.5s}
+
+.intro{
+position:fixed;inset:0;
+background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;
+display:flex;align-items:center;justify-content:center;
+z-index:9;animation:fadeOut 1s ease forwards;animation-delay:2.5s}
 .intro::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.7)}
 .intro h1{position:relative;z-index:1;font-size:2rem;text-shadow:0 0 20px #38bdf8}
 @keyframes fadeOut{to{opacity:0;visibility:hidden}}
+
 .app{max-width:420px;margin:auto;min-height:100vh;background:#020617;border-radius:18px;overflow:hidden}
-.cover{height:180px;background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat}
+.cover{
+height:180px;
+background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat
+}
 .content{padding:20px;text-align:center}
-.btn{width:100%;margin-top:10px;padding:14px;border-radius:14px;border:none;cursor:pointer;font-weight:bold}
+
+.btn{
+width:100%;margin-top:10px;padding:14px;
+border-radius:14px;border:none;
+cursor:pointer;font-weight:bold
+}
 .btn-primary{background:#38bdf8;color:#020617}
 .btn-option{background:#111827;color:#e5e7eb;border:1px solid #38bdf8}
 .btn-option:hover{background:#38bdf8;color:#020617}
-.game-box{padding:20px;border-top:2px solid #38bdf8;animation:fadeIn .4s ease;text-align:center}
-.game-box img{width:100%;border-radius:12px;margin:10px 0;border:2px solid #38bdf8}
+
+.game-box{
+padding:20px;border-top:2px solid #38bdf8;
+animation:fadeIn .4s ease;text-align:center
+}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.content .btn-option{display:none}
-.dossie{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:20;display:none;overflow:auto}
-.dossie-box{max-width:400px;margin:40px auto;background:#020617;border-radius:16px;padding:20px;text-align:center}
-.dossie h3{color:#38bdf8}
-.dossie img{width:100%;border-radius:12px;margin-bottom:10px;border:2px solid #38bdf8}
+
+img{max-width:100%;border-radius:12px;margin:10px 0}
+
+/* MODAIS */
+.modal{
+position:fixed;inset:0;
+background:rgba(0,0,0,.9);
+display:none;z-index:20;overflow:auto
+}
+.modal-box{
+max-width:400px;margin:40px auto;
+background:#020617;border-radius:16px;padding:20px
+}
+.modal h3{color:#38bdf8}
 </style>
 </head>
 
@@ -39,43 +62,101 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 
 <div class="app">
 <div class="cover"></div>
-<div class="content" id="home">
+<div class="content">
 <h2>Caso 01 — O Desaparecimento de Elisa</h2>
 <p>Cada escolha pode revelar… ou esconder a verdade.</p>
 <button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
 </div>
 </div>
 
-<div class="dossie" id="dossie">
-  <div class="dossie-box" id="dossieBox"></div>
+<!-- MODAL PROVAS -->
+<div class="modal" id="provas">
+<div class="modal-box" id="provasBox"></div>
+</div>
+
+<!-- MODAL INTERROGATÓRIO -->
+<div class="modal" id="interrogatorio">
+<div class="modal-box" id="interrogatorioBox"></div>
 </div>
 
 <script>
-/* HISTÓRIA EXPANDIDA — ACRESCENTADA */
+// HISTÓRIA
 const historia=[
-{texto:"Elisa era uma jovem reservada, mas nos últimos dias parecia assustada.",img:null},
-{texto:"Ela comentou com colegas que havia descoberto algo grave.",img:null},
-{texto:"Na noite do desaparecimento, uma ligação misteriosa foi registrada.",img:null},
-{texto:"Elisa desapareceu numa noite fria e silenciosa.",img:"https://i.ibb.co/3c2d8nY/cena-crime.jpg"},
-{texto:"O quarto da vítima estava revirado, mas sem sinais de arrombamento.",img:"https://i.ibb.co/ZV0wWqN/quarto-vitima.jpg"},
-{texto:"O celular de Elisa foi encontrado escondido atrás do guarda-roupa.",img:"https://i.ibb.co/D9FzR5S/celular-vitima.jpg"},
-{texto:"Mensagens apagadas indicam ameaças diretas.",img:null},
-{texto:"Você precisa analisar as provas antes de interrogar.",img:null}
+"Elisa desapareceu numa noite fria e silenciosa.",
+"Nos últimos dias, ela demonstrava medo e nervosismo.",
+"Seu celular escondia mensagens apagadas.",
+"Testemunhas ouviram uma discussão.",
+"Agora você deve analisar as provas."
 ];
 
-let provasColetadas=0;
-
-const dossieData=[
-{nome:"Melhor Amiga",img:"https://i.ibb.co/Nxv9L3g/amiga.jpg",texto:"Sem provas diretas."},
-{nome:"Ex-namorado",img:"https://i.ibb.co/8dRZLkN/ex.jpg",texto:"Álibi fraco."},
-{nome:"Colega de Trabalho",img:"https://i.ibb.co/k2kC8Xk/colega.jpg",texto:"Mensagens apagadas no celular da vítima."},
-{nome:"Vizinho",img:"https://i.ibb.co/FgZ9X3h/vizinho.jpg",texto:"Apenas testemunha."}
+// PROVAS
+const provas=[
+{
+titulo:"📱 Celular de Elisa",
+img:"https://i.ibb.co/qkKk6V9/phone.jpg",
+texto:"Mensagens apagadas e ameaças recentes.",
+significado:"Elisa estava sendo pressionada por alguém próximo."
+},
+{
+titulo:"📹 Câmeras de Segurança",
+img:"https://i.ibb.co/G2Q4k2N/camera.jpg",
+texto:"Ela conversa com alguém horas antes do sumiço.",
+significado:"O suspeito mentiu ao dizer que não a viu."
+},
+{
+titulo:"📓 Anotações",
+img:"https://i.ibb.co/8d9v4mM/notebook.jpg",
+texto:"Ela escreveu que descobriu algo ilegal.",
+significado:"O crime pode ter sido para silenciá-la."
+},
+{
+titulo:"👂 Testemunha",
+img:"https://i.ibb.co/NxP9fL0/witness.jpg",
+texto:"Discussão intensa na noite do crime.",
+significado:"Não foi um desaparecimento voluntário."
+}
 ];
 
-let dIndex=0;
+// INTERROGATÓRIO
+const perguntas=[
+{
+q:"Elisa descobriu algo ilegal no trabalho?",
+op:[
+{t:"Sim",c:true},
+{t:"Não",c:false}
+]
+},
+{
+q:"Seu número aparece nas mensagens apagadas?",
+op:[
+{t:"Não sei explicar",c:false},
+{t:"Sim, discutimos",c:true}
+]
+},
+{
+q:"Você encontrou Elisa naquele dia?",
+op:[
+{t:"Não vi ela",c:false},
+{t:"Sim, depois do trabalho",c:true}
+]
+},
+{
+q:"Houve uma discussão naquela noite?",
+op:[
+{t:"Não",c:false},
+{t:"Sim, perdi o controle",c:true}
+]
+}
+];
 
+let etapa=0;
+let provaIndex=0;
+let pontos=0;
+let perguntaIndex=0;
+
+// INICIAR
 function startGame(){
-document.getElementById("home").style.display="none";
+document.querySelector(".content").innerHTML="";
 mostrarHistoria(0);
 }
 
@@ -84,87 +165,82 @@ const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
 box.innerHTML=`
-<p>${historia[i].texto}</p>
-${historia[i].img?`<img src="${historia[i].img}">`:""}
-<button class="btn btn-primary">${i<historia.length-1?"Continuar":"Analisar Dossiê"}</button>
-`;
+<p>${historia[i]}</p>
+<button class="btn btn-primary">${i<historia.length-1?"Continuar":"Analisar Provas"}</button>`;
 app.appendChild(box);
+
 box.querySelector("button").onclick=()=>{
 box.remove();
-i<historia.length-1?mostrarHistoria(i+1):abrirDossie();
+i<historia.length-1?mostrarHistoria(i+1):abrirProvas();
 }
 }
 
-function abrirDossie(){
-document.getElementById("dossie").style.display="block";
-renderDossie();
+// PROVAS
+function abrirProvas(){
+document.getElementById("provas").style.display="block";
+renderProva();
 }
 
-function renderDossie(){
-const d=dossieData[dIndex];
-document.getElementById("dossieBox").innerHTML=`
-<img src="${d.img}">
-<h3>${d.nome}</h3>
-<p>${d.texto}</p>
-<button class="btn btn-option" onclick="coletarProva()">🔎 Analisar Prova</button>
-<button class="btn btn-option" onclick="dIndex>0&&dIndex--;renderDossie()">⬅</button>
-<button class="btn btn-option" onclick="dIndex<dossieData.length-1&&dIndex++;renderDossie()">➡</button>
-<button class="btn btn-primary" onclick="fecharDossie()">Finalizar Análise</button>
+function renderProva(){
+const p=provas[provaIndex];
+document.getElementById("provasBox").innerHTML=`
+<h3>${p.titulo}</h3>
+<img src="${p.img}">
+<p>${p.texto}</p>
+<p><strong>O que isso significa:</strong><br>${p.significado}</p>
+<button class="btn btn-option" onclick="prevProva()">⬅</button>
+<button class="btn btn-option" onclick="nextProva()">➡</button>
+<button class="btn btn-primary" onclick="fecharProvas()">Ir para Interrogatório</button>
 `;
 }
 
-function coletarProva(){
-provasColetadas++;
-alert("Prova analisada");
+function nextProva(){
+if(provaIndex<provas.length-1){provaIndex++;renderProva();}
+}
+function prevProva(){
+if(provaIndex>0){provaIndex--;renderProva();}
+}
+function fecharProvas(){
+document.getElementById("provas").style.display="none";
+abrirInterrogatorio();
 }
 
-function fecharDossie(){
-document.getElementById("dossie").style.display="none";
-if(provasColetadas>=2){
-interrogatorio();
+// INTERROGATÓRIO
+function abrirInterrogatorio(){
+document.getElementById("interrogatorio").style.display="block";
+renderPergunta();
+}
+
+function renderPergunta(){
+const p=perguntas[perguntaIndex];
+let html=`<h3>Interrogatório</h3><p>${p.q}</p>`;
+p.op.forEach(o=>{
+html+=`<button class="btn btn-option" onclick="responder(${o.c})">${o.t}</button>`;
+});
+document.getElementById("interrogatorioBox").innerHTML=html;
+}
+
+function responder(correta){
+if(correta) pontos++;
+perguntaIndex++;
+if(perguntaIndex<perguntas.length){
+renderPergunta();
 }else{
-alert("Você precisa analisar mais provas.");
-abrirDossie();
+finalizar();
 }
 }
 
-function interrogatorio(){
-const app=document.querySelector(".app");
-const box=document.createElement("div");
-box.className="game-box";
-box.innerHTML=`
-<h3>Com base nas provas, quem é o culpado?</h3>
-<button class="btn btn-option" onclick="final(false)">Melhor Amiga</button>
-<button class="btn btn-option" onclick="final(false)">Ex-namorado</button>
-<button class="btn btn-option" onclick="final(true)">Colega de Trabalho</button>
-<button class="btn btn-option" onclick="final(false)">Vizinho</button>
+// FINAL
+function finalizar(){
+let texto=pontos>=3
+?"✅ CONCLUSÃO CORRETA<br>O colega de trabalho tentou silenciar Elisa após ela descobrir um esquema ilegal."
+:"❌ CASO NÃO SOLUCIONADO<br>As escolhas erradas permitiram que o culpado escapasse.";
+
+document.getElementById("interrogatorioBox").innerHTML=`
+<h3>Resultado</h3>
+<p>${texto}</p>
+<button class="btn btn-primary" onclick="location.reload()">Jogar Novamente</button>
 `;
-app.appendChild(box);
-}
-
-/* FINAL + BOTÃO DE VOLTAR — ACRESCENTADO */
-function final(acertou){
-const app=document.querySelector(".app");
-const box=document.createElement("div");
-box.className="game-box";
-box.innerHTML=acertou?`
-<h2>🚔 Caso Resolvido</h2>
-<p>As provas levaram à prisão do colega de trabalho.</p>
-<p>Após o interrogatório, ele confessou o crime.</p>
-<p><strong>Justiça foi feita.</strong></p>
-<button class="btn btn-primary" onclick="voltarInicio()">🏠 Voltar à Tela Inicial</button>
-`:
-`
-<h2>❌ Conclusão Incorreta</h2>
-<p>O culpado escapou.</p>
-<button class="btn btn-primary" onclick="voltarInicio()">🏠 Voltar à Tela Inicial</button>
-`;
-app.appendChild(box);
-}
-
-/* FUNÇÃO NOVA — ACRESCENTADA */
-function voltarInicio(){
-location.reload();
 }
 </script>
 
