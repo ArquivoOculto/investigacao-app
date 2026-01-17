@@ -99,12 +99,24 @@
     .game-box {
       padding: 20px;
       border-top: 2px solid #38bdf8;
-      animation: fadeIn .5s ease;
+      animation: fadeIn .4s ease;
+      text-align: center;
+    }
+
+    .game-box p {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 15px;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    #btnInstall {
+      display: none;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -122,12 +134,28 @@
   <div class="content">
     <h2>Caso 01 — O Desaparecimento de Elisa</h2>
     <p>Cada escolha pode revelar… ou esconder a verdade.</p>
-    <button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
+
+    <button class="btn btn-primary" onclick="startGame()">
+      Iniciar Investigação
+    </button>
+
+    <button id="btnInstall" class="btn btn-option">
+      📥 Instalar HydraFilmes
+    </button>
   </div>
 </div>
 
 <script>
-/* ===== DADOS DO JOGO ===== */
+/* ===== HISTÓRIA ===== */
+
+const historia = [
+  "Elisa desapareceu numa noite fria e silenciosa.",
+  "Seu celular foi encontrado desligado em seu quarto.",
+  "Mensagens recentes indicam que ela estava com medo.",
+  "Você é o investigador responsável por descobrir a verdade."
+];
+
+/* ===== JOGO ===== */
 
 let step = 0;
 let correctAnswers = 0;
@@ -175,17 +203,40 @@ const game = [
 function startGame() {
   step = 0;
   correctAnswers = 0;
-  showStep();
+  mostrarHistoria(0);
 }
 
-function showStep() {
+function mostrarHistoria(index) {
   const app = document.querySelector(".app");
 
   const box = document.createElement("div");
   box.className = "game-box";
 
-  const current = game[step];
+  box.innerHTML = `
+    <p>${historia[index]}</p>
+    <button class="btn btn-primary">
+      ${index < historia.length - 1 ? "Continuar" : "Começar investigação"}
+    </button>
+  `;
 
+  app.appendChild(box);
+
+  box.querySelector("button").onclick = () => {
+    box.remove();
+    if (index < historia.length - 1) {
+      mostrarHistoria(index + 1);
+    } else {
+      showStep();
+    }
+  };
+}
+
+function showStep() {
+  const app = document.querySelector(".app");
+  const box = document.createElement("div");
+  box.className = "game-box";
+
+  const current = game[step];
   let html = `<h3>${current.q}</h3>`;
 
   current.options.forEach((opt, i) => {
@@ -223,11 +274,32 @@ function endGame() {
       ? "🕵️ Você resolveu o caso corretamente e revelou o culpado."
       : "❌ Você seguiu pistas erradas. O culpado escapou."}
     </p>
-    <button class="btn btn-primary" onclick="location.reload()">Jogar novamente</button>
+    <button class="btn btn-primary" onclick="location.reload()">
+      Jogar novamente
+    </button>
   `;
 
   app.appendChild(box);
 }
+
+/* ===== BOTÃO INSTALAR PWA ===== */
+
+let deferredPrompt;
+const installBtn = document.getElementById("btnInstall");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.style.display = "none";
+});
 </script>
 
 </body>
