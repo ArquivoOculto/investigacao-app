@@ -2,38 +2,33 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Jogo de Investigação</title>
+  <title>Investigação Criminal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ===== PWA ===== -->
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020617">
 
-  <!-- ===== CSS ===== -->
   <style>
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
-      transition: all 0.25s ease;
       font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
+      margin: 0;
       background: radial-gradient(circle at top, #020617, #000);
-      color: #fff;
-      min-height: 100vh;
+      color: #e5e7eb;
     }
 
-    /* ===== INTRO ===== */
     .intro {
       position: fixed;
       inset: 0;
-      background: url("cover.jpg") center/cover no-repeat;
+      background: url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 10;
+      z-index: 9;
       animation: fadeOut 1s ease forwards;
       animation-delay: 2.5s;
     }
@@ -42,193 +37,198 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,.7);
     }
 
     .intro h1 {
       position: relative;
-      z-index: 2;
+      z-index: 1;
       font-size: 2rem;
       text-shadow: 0 0 20px #38bdf8;
     }
 
     @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
+      to { opacity: 0; visibility: hidden; }
     }
 
-    /* ===== APP ===== */
     .app {
       max-width: 420px;
       margin: auto;
       min-height: 100vh;
-      background: linear-gradient(180deg, #020617, #020617ee);
-      backdrop-filter: blur(10px);
+      background: #020617;
       border-radius: 18px;
-      animation: fadeIn 0.8s ease;
+      overflow: hidden;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== CAPA ===== */
     .cover {
       height: 180px;
-      background: url("cover.jpg") center/cover no-repeat;
-      box-shadow: inset 0 -60px 80px rgba(0,0,0,0.8);
+      background: url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;
     }
 
-    .profile {
-      text-align: center;
-      margin-top: -50px;
-    }
-
-    .profile img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 3px solid #020617;
-      box-shadow: 0 0 15px rgba(56,189,248,0.6);
-    }
-
-    h2 {
-      margin-top: 10px;
-    }
-
-    .phrase {
-      color: #c7d2fe;
-      margin: 10px;
-    }
-
-    /* ===== BOTÕES ===== */
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .content {
       padding: 20px;
+      text-align: center;
     }
 
     .btn {
+      width: 100%;
+      margin-top: 10px;
       padding: 14px;
-      border-radius: 18px;
+      border-radius: 14px;
       border: none;
       cursor: pointer;
-      font-size: 1rem;
+      font-weight: bold;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
-    }
-
-    .btn-intro {
-      background: transparent;
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
-    }
-
-    .btn-intro:hover {
+    .btn-primary {
       background: #38bdf8;
       color: #020617;
     }
 
-    .btn-play {
-      background: #38bdf8;
-      color: #020617;
-      box-shadow: 0 0 20px rgba(56,189,248,0.7);
-    }
-
-    /* ===== JOGO ===== */
-    [data-game-box] {
-      padding: 20px;
-      border-top: 2px solid #38bdf8;
-    }
-
-    [data-game-box] button {
-      margin-top: 10px;
-      width: 100%;
-      padding: 10px;
+    .btn-option {
       background: #111827;
       color: #e5e7eb;
       border: 1px solid #38bdf8;
-      border-radius: 12px;
-      cursor: pointer;
     }
 
-    [data-game-box] button:hover {
+    .btn-option:hover {
       background: #38bdf8;
       color: #020617;
     }
 
-    small {
-      color: #94a3b8;
-      display: block;
-      text-align: center;
-      margin-bottom: 15px;
+    .game-box {
+      padding: 20px;
+      border-top: 2px solid #38bdf8;
+      animation: fadeIn .5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- INTRO -->
-  <div class="intro">
-    <h1>Jogo de Investigação</h1>
+<!-- INTRO -->
+<div class="intro">
+  <h1>Investigação Criminal</h1>
+</div>
+
+<div class="app">
+  <div class="cover"></div>
+
+  <div class="content">
+    <h2>Caso 01 — O Desaparecimento de Elisa</h2>
+    <p>Cada escolha pode revelar… ou esconder a verdade.</p>
+    <button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
   </div>
+</div>
 
-  <!-- APP -->
-  <div class="app">
-    <div class="cover"></div>
+<script>
+/* ===== DADOS DO JOGO ===== */
 
-    <div class="profile">
-      <img src="icon.png" alt="Perfil">
-      <h2>Investigação Criminal</h2>
-      <p class="phrase">Descubra a verdade por trás do caso.</p>
-    </div>
+let step = 0;
+let correctAnswers = 0;
 
-    <div class="buttons">
-      <button class="btn btn-play" onclick="startGame()">Iniciar Investigação</button>
-      <button class="btn btn-intro" id="installBtn" hidden>Instalar App</button>
-    </div>
+const game = [
+  {
+    q: "Elisa desapareceu. Onde você investiga primeiro?",
+    options: [
+      { t: "Quarto da vítima", c: true, r: "Você encontra marcas de luta e um celular escondido." },
+      { t: "Cozinha", c: false, r: "Nada relevante além de um copo lavado." }
+    ]
+  },
+  {
+    q: "O celular revela:",
+    options: [
+      { t: "Mensagens ameaçadoras", c: true, r: "As mensagens indicam alguém próximo." },
+      { t: "Fotos antigas", c: false, r: "As fotos não ajudam na investigação." }
+    ]
+  },
+  {
+    q: "Quem você interroga primeiro?",
+    options: [
+      { t: "Melhor amiga", c: true, r: "Ela se contradiz várias vezes." },
+      { t: "Vizinho", c: false, r: "O vizinho não estava na cidade." }
+    ]
+  },
+  {
+    q: "Nova pista surge:",
+    options: [
+      { t: "Câmeras de segurança", c: true, r: "As imagens mostram alguém conhecido entrando." },
+      { t: "Relato anônimo", c: false, r: "O relato é falso." }
+    ]
+  },
+  {
+    q: "Conclusão final:",
+    options: [
+      { t: "Acusar a melhor amiga", c: true, r: "🔴 CULPADA REVELADA: Ela tentou silenciar Elisa." },
+      { t: "Acusar o vizinho", c: false, r: "❌ O verdadeiro culpado continua livre." }
+    ]
+  }
+];
 
-    <small>© Jogo Interativo</small>
-  </div>
+/* ===== FUNÇÕES ===== */
 
-  <!-- ===== SCRIPT ===== -->
-  <script>
-    /* ===== PWA ===== */
-    let deferredPrompt;
-    const installBtn = document.getElementById("installBtn");
+function startGame() {
+  step = 0;
+  correctAnswers = 0;
+  showStep();
+}
 
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.hidden = false;
-    });
+function showStep() {
+  const app = document.querySelector(".app");
 
-    installBtn.addEventListener("click", async () => {
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-    });
+  const box = document.createElement("div");
+  box.className = "game-box";
 
-    /* ===== JOGO ===== */
-    function startGame() {
-      const box = document.createElement("div");
-      box.setAttribute("data-game-box", "true");
+  const current = game[step];
 
-      box.innerHTML = `
-        <h3>🕵️ Caso 01</h3>
-        <p>Elisa desapareceu misteriosamente. O que você faz primeiro?</p>
-        <button onclick="alert('Você foi até a casa dela')">Investigar a casa</button>
-        <button onclick="alert('Você interrogou os amigos')">Interrogar amigos</button>
-      `;
+  let html = `<h3>${current.q}</h3>`;
 
-      document.querySelector(".app").appendChild(box);
-    }
-  </script>
+  current.options.forEach((opt, i) => {
+    html += `<button class="btn btn-option" onclick="answer(${i})">${opt.t}</button>`;
+  });
+
+  box.innerHTML = html;
+  app.appendChild(box);
+}
+
+function answer(index) {
+  const current = game[step];
+  alert(current.options[index].r);
+
+  if (current.options[index].c) correctAnswers++;
+
+  document.querySelector(".game-box").remove();
+  step++;
+
+  if (step < game.length) {
+    showStep();
+  } else {
+    endGame();
+  }
+}
+
+function endGame() {
+  const app = document.querySelector(".app");
+  const box = document.createElement("div");
+  box.className = "game-box";
+
+  box.innerHTML = `
+    <h3>Resultado Final</h3>
+    <p>${correctAnswers >= 4
+      ? "🕵️ Você resolveu o caso corretamente e revelou o culpado."
+      : "❌ Você seguiu pistas erradas. O culpado escapou."}
+    </p>
+    <button class="btn btn-primary" onclick="location.reload()">Jogar novamente</button>
+  `;
+
+  app.appendChild(box);
+}
+</script>
 
 </body>
 </html>
