@@ -38,41 +38,10 @@ h1, h2, h3 { color: #ff3b3b; }
   cursor: pointer;
 }
 .option:hover { background: #2a2a2a; }
-
-/* ===== SISTEMA DE CAPÍTULOS (ADICIONADO) ===== */
-#capitulos {
-  background:#111;
-  border-bottom:2px solid #b30000;
-  padding:10px;
-  text-align:center;
-}
-.capitulo {
-  display:inline-block;
-  margin:5px;
-  padding:8px 14px;
-  border-radius:20px;
-  background:#2a2a2a;
-  color:#aaa;
-  font-size:14px;
-}
-.capitulo.ativo {
-  background:#b30000;
-  color:#fff;
-}
-.capitulo.desbloqueado {
-  background:#1c1c1c;
-  color:#ff3b3b;
-}
 </style>
 </head>
 
 <body>
-
-<!-- SISTEMA DE CAPÍTULOS (ADICIONADO) -->
-<div id="capitulos">
-  <span id="cap1" class="capitulo ativo">Capítulo 1</span>
-  <span id="cap2" class="capitulo">Capítulo 2</span>
-</div>
 
 <!-- CAPA -->
 <section id="capa" class="container">
@@ -83,9 +52,76 @@ h1, h2, h3 { color: #ff3b3b; }
 <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
 </section>
 
-<!-- (TODO O SEU HTML ORIGINAL PERMANECE IGUAL) -->
+<!-- INTRO -->
+<section id="intro" class="container hidden">
+<img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
+<p>Elisa desapareceu após enviar mensagens suspeitas.</p>
+<button onclick="mostrarDossie()">Acessar Dossiê</button>
+</section>
 
-<!-- RESULTADO CASO 02 -->
+<!-- DOSSIÊ -->
+<section id="dossie" class="container hidden">
+<h2>Dossiê do Caso 01</h2>
+<p><strong>Vítima:</strong> Elisa Martins</p>
+<p><strong>Status:</strong> Desaparecida</p>
+
+<h3>Imagem encontrada no celular</h3>
+<img src="https://i.ibb.co/hFQwkyt0/IMG-20260116-WA0028.jpg">
+
+<button onclick="mostrarInterrogatorio()">Iniciar Interrogatório</button>
+</section>
+
+<!-- INTERROGATÓRIO CASO 01 -->
+<section id="interrogatorio" class="container hidden">
+<h2>Interrogatório — Caso 01</h2>
+
+<h3>Lucas</h3>
+<div class="option" onclick="resposta('lucas')">Onde você estava?</div>
+<div class="option" onclick="resposta('lucas')">Por que Elisa tinha medo?</div>
+
+<h3>Marina</h3>
+<div class="option" onclick="resposta('marina')">Por que mentiu?</div>
+<div class="option" onclick="resposta('marina')">O que sabe da imagem?</div>
+
+<h3>Renato</h3>
+<div class="option" onclick="resposta('renato')">Você a pressionava?</div>
+<div class="option" onclick="resposta('renato')">Por que seu número aparece?</div>
+</section>
+
+<!-- RESULTADO CASO 01 -->
+<section id="resultado" class="container hidden">
+<h2>Conclusão — Caso 01</h2>
+<p id="textoResultado"></p>
+<button onclick="iniciarCaso2()">➡ Próximo Caso</button>
+</section>
+
+<!-- ================= CASO 02 ================= -->
+
+<section id="caso2" class="container hidden">
+<h2>Caso 02 — O Silêncio da Testemunha</h2>
+<p>
+Uma testemunha-chave foi encontrada morta antes de depor.
+Tudo indica que alguém tentou calá-la.
+</p>
+<button onclick="interrogatorioCaso2()">Iniciar Investigação</button>
+</section>
+
+<section id="interrogatorio2" class="container hidden">
+<h2>Interrogatório — Caso 02</h2>
+
+<h3>Paulo (vizinho)</h3>
+<div class="option" onclick="resposta2('paulo')">Você ouviu algo?</div>
+<div class="option" onclick="resposta2('paulo')">Por que ligou anonimamente?</div>
+
+<h3>Clara (jornalista)</h3>
+<div class="option" onclick="resposta2('clara')">O que a vítima ia revelar?</div>
+<div class="option" onclick="resposta2('clara')">Quem tentou impedir a matéria?</div>
+
+<h3>Henrique (advogado)</h3>
+<div class="option" onclick="resposta2('henrique')">Você representava quem?</div>
+<div class="option" onclick="resposta2('henrique')">Por que destruiu documentos?</div>
+</section>
+
 <section id="resultado2" class="container hidden">
 <h2>Conclusão — Caso 02</h2>
 <p id="textoResultado2"></p>
@@ -93,30 +129,64 @@ h1, h2, h3 { color: #ff3b3b; }
 </section>
 
 <script>
-/* ===== SISTEMA DE CAPÍTULOS (ADICIONADO) ===== */
-let capituloAtual = 1;
+let pistas = { lucas:0, marina:0, renato:0 };
+let pistas2 = { paulo:0, clara:0, henrique:0 };
 
-function atualizarCapitulo(num){
-capituloAtual = num;
-document.querySelectorAll(".capitulo").forEach(c=>c.classList.remove("ativo"));
-document.getElementById("cap"+num).classList.add("ativo","desbloqueado");
+function esconderTudo(){
+document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
 }
 
-/* ACOPLADO AO FLUXO EXISTENTE (SEM ALTERAR FUNÇÕES) */
-const iniciarCaso2_original = iniciarCaso2;
-iniciarCaso2 = function(){
-atualizarCapitulo(2);
-iniciarCaso2_original();
+function mostrarIntro(){esconderTudo();intro.classList.remove("hidden");}
+function mostrarDossie(){esconderTudo();dossie.classList.remove("hidden");}
+function mostrarInterrogatorio(){esconderTudo();interrogatorio.classList.remove("hidden");}
+
+function resposta(nome){
+pistas[nome]++;
+if(pistas[nome]>=2){
+esconderTudo();
+resultado.classList.remove("hidden");
+textoResultado.innerText =
+nome==="renato"
+?"Renato coagiu Elisa para silenciar provas."
+:"Suspeito inocentado por falta de provas.";
+}
 }
 
-const resposta2_original = resposta2;
-resposta2 = function(nome){
-resposta2_original(nome);
+function iniciarCaso2(){
+esconderTudo();
+caso2.classList.remove("hidden");
+}
+
+function interrogatorioCaso2(){
+esconderTudo();
+interrogatorio2.classList.remove("hidden");
+}
+
+function resposta2(nome){
+pistas2[nome]++;
 if(pistas2[nome]>=2){
-document.getElementById("cap2").classList.add("desbloqueado");
+esconderTudo();
+resultado2.classList.remove("hidden");
+textoResultado2.innerText =
+nome==="henrique"
+?"Henrique mandou silenciar a testemunha."
+:"Investigação inconclusiva.";
 }
 }
+
+/* PWA */
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt",(e)=>{
+e.preventDefault();
+deferredPrompt=e;
+btnInstall.classList.remove("hidden");
+});
+btnInstall.onclick=()=>{
+deferredPrompt.prompt();
+deferredPrompt=null;
+btnInstall.classList.add("hidden");
+};
 </script>
 
 </body>
-</html>
+                                                                   </html>
