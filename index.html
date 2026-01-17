@@ -132,6 +132,36 @@ Renato
 <div class="option" onclick="resposta('renato')">Por que seu número aparece em mensagens apagadas?</div>
 </section>
 
+<!-- INTERROGATÓRIO DINÂMICO CASO 01 -->
+<section id="interrogatorio_dinamico1" class="container hidden">
+<h2>Interrogatório Avançado — Caso 01</h2>
+<p>Escolha perguntas adicionais para descobrir contradições e detalhes escondidos.</p>
+
+<h3>
+<img src="https://i.ibb.co/8sX9J0h/lucas.png" alt="Lucas" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+Lucas (colega de trabalho)
+</h3>
+<div class="option" onclick="resposta('lucas')">Você viu alguém suspeito próximo ao escritório?</div>
+<div class="option" onclick="resposta('lucas')">Elisa comentou algo sobre ameaças recentes?</div>
+<div class="option" onclick="resposta('lucas')">Você tinha alguma animosidade com a vítima?</div>
+
+<h3>
+<img src="https://i.ibb.co/7vL8H2m/marina.png" alt="Marina" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+Marina (amiga próxima)
+</h3>
+<div class="option" onclick="resposta('marina')">Por que não contou tudo ao investigador?</div>
+<div class="option" onclick="resposta('marina')">O que sabia sobre as ameaças a Elisa?</div>
+<div class="option" onclick="resposta('marina')">Você já viu Renato pressionando Elisa?</div>
+
+<h3>
+<img src="https://i.ibb.co/2Z8b2Fh/renato.png" alt="Renato" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+Renato (suspeito principal)
+</h3>
+<div class="option" onclick="resposta('renato')">Você alterou ou apagou mensagens de Elisa?</div>
+<div class="option" onclick="resposta('renato')">Qual foi seu último contato com Elisa?</div>
+<div class="option" onclick="resposta('renato')">Alguém sabia que você estava pressionando Elisa?</div>
+</section>
+
 <!-- RESULTADO CASO 01 -->
 <section id="resultado" class="container hidden">
 <h2>Conclusão — Caso 01</h2>
@@ -154,7 +184,7 @@ O investigador deve juntar cada fragmento de informação antes que evidências 
 <button onclick="interrogatorioCaso2()">Iniciar Investigação</button>
 </section>
 
-<!-- INTERROGATÓRIO CASO 02 COM HISTÓRIAS E FOTOS -->
+<!-- INTERROGATÓRIO CASO 02 -->
 <section id="interrogatorio2" class="container hidden">
 <h2>Interrogatório — Caso 02</h2>
 <p>Cada pergunta pode revelar segredos escondidos. Observe os detalhes das respostas e a história de cada suspeito.</p>
@@ -163,7 +193,6 @@ O investigador deve juntar cada fragmento de informação antes que evidências 
 <img src="https://i.ibb.co/F3d9c4K/paulo.png" alt="Paulo" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
 Paulo (vizinho)
 </h3>
-<p><em>Viu movimentações estranhas na casa da vítima. Às vezes parece nervoso ao falar sobre a noite do desaparecimento.</em></p>
 <div class="option" onclick="resposta2('paulo')">Você ouviu algo estranho na noite do desaparecimento?</div>
 <div class="option" onclick="resposta2('paulo')">Por que ligou anonimamente para alertar a vítima?</div>
 
@@ -171,7 +200,6 @@ Paulo (vizinho)
 <img src="https://i.ibb.co/kBqxWkY/clara.png" alt="Clara" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
 Clara (jornalista)
 </h3>
-<p><em>Amiga da vítima e investigadora independente. Estava investigando um esquema poderoso que a vítima ia revelar.</em></p>
 <div class="option" onclick="resposta2('clara')">O que a vítima ia revelar em sua matéria?</div>
 <div class="option" onclick="resposta2('clara')">Quem tentou impedir a publicação das provas?</div>
 
@@ -179,18 +207,45 @@ Clara (jornalista)
 <img src="https://i.ibb.co/VY9cZ0v/henrique.png" alt="Henrique" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
 Henrique (advogado)
 </h3>
-<p><em>Advogado ligado a clientes poderosos. Sua relação com a vítima é suspeita, documentos desaparecem misteriosamente sob sua responsabilidade.</em></p>
 <div class="option" onclick="resposta2('henrique')">Você representava algum cliente suspeito?</div>
 <div class="option" onclick="resposta2('henrique')">Por que documentos importantes desapareceram misteriosamente?</div>
 </section>
 
-<!-- RESULTADO CASO 02 -->
+<!-- INTERROGATÓRIO DINÂMICO CASO 02 -->
+<section id="interrogatorio_dinamico2" class="container hidden">
+<h2>Interrogatório Avançado — Caso 02</h2>
+<p>Mais perguntas interativas para analisar contradições e descobrir detalhes escondidos.</p>
+
+<h3>
+<img src="https://i.ibb.co/F3d9c4K/paulo.png" alt="Paulo" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+Paulo (vizinho)
+</h3>
+<div class="option" onclick="resposta2('paulo')">Você viu alguém entrando na casa da vítima?</div>
+<div class="option" onclick="resposta2('paulo')">Recebeu instruções para se calar?</div>
+<div class="option" onclick="resposta2('paulo')">Você tem algum conflito com a vítima?</div>
+
+<h3>
+<img src="https://i.ibb.co/kBqxWkY/clara.png" alt="Clara" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+Clara (jornalista)
+</h3>
+<div class="option" onclick="resposta2('clara')">Você recebeu ameaças para não publicar?</div>
+<div class="option" onclick="resposta2('clara')">Qual documento a vítima confiou a você?</div>
+<div class="option" onclick="resposta2('clara')">Você contou tudo que sabia para a polícia?</div>
+
+<h3>
+<img src="https://i.ibb.co/VY9cZ0v/henrique.png" alt="Henrique" style="width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;">
+Henrique (advogado)
+</h3>
+<div class="option" onclick="resposta2('henrique')">Você alterou provas ou documentos?</div>
+<div class="option" onclick="resposta2('henrique')">Escondeu informações da polícia?</div>
+<div class="option" onclick="resposta2('henrique')">Você tinha contato com suspeitos antes do desaparecimento?</div>
+</section>
+
+<!-- RESULTADOS -->
 <section id="resultado2" class="container hidden">
 <h2>Conclusão — Caso 02</h2>
 <p id="textoResultado2"></p>
-
 <div class="dossie-final" id="dossieCulpado2"></div>
-
 <button onclick="location.reload()">Voltar ao Início</button>
 </section>
 
@@ -218,6 +273,7 @@ dossieCulpado1.innerHTML=`
 <p><strong>Nome:</strong> Renato</p>
 <p><strong>Crime:</strong> Coação, sequestro e obstrução da justiça.</p>
 <p>Elisa descobriu um esquema ilegal e foi silenciada.</p>
+<img src="https://i.ibb.co/2Z8b2Fh/renato-prisao.png" alt="Renato preso" style="width:100%;border-radius:10px;margin-top:10px;">
 `;
 }else{
 textoResultado.innerText="Suspeito inocentado.";
@@ -247,6 +303,7 @@ dossieCulpado2.innerHTML=`
 <p><strong>Nome:</strong> Henrique</p>
 <p><strong>Crime:</strong> Homicídio e destruição de provas.</p>
 <p>Mandou eliminar a testemunha para proteger clientes poderosos.</p>
+<img src="https://i.ibb.co/VY9cZ0v/henrique-prisao.png" alt="Henrique preso" style="width:100%;border-radius:10px;margin-top:10px;">
 `;
 }else{
 textoResultado2.innerText="Investigação inconclusiva.";
