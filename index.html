@@ -26,10 +26,14 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 #btnInstall{display:none;margin-top:15px}
 
+/* ESCONDER BOTÃO DO DOSSIÊ NA HOME */
+.content .btn-option{display:none}
+
 /* DOSSIÊ */
-.dossie{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:20;display:none;overflow:auto}
-.dossie-box{max-width:400px;margin:40px auto;background:#020617;border-radius:16px;padding:20px}
+.dossie{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:20;display:none;overflow:auto}
+.dossie-box{max-width:400px;margin:40px auto;background:#020617;border-radius:16px;padding:20px;text-align:center}
 .dossie h3{color:#38bdf8}
+.dossie img{width:100%;border-radius:12px;margin-bottom:10px;border:2px solid #38bdf8}
 </style>
 </head>
 
@@ -65,15 +69,40 @@ let step=0;
 let correctAnswers=0;
 let dossieObrigatorio=true;
 
-/* GAME */
-const game=[/* (sem alterações) */];
+/* GAME ORIGINAL CONTINUA IGUAL */
 
+/* DOSSIÊ COM IMAGENS */
 const dossieData=[
-{nome:"Melhor Amiga",texto:"Inveja crescente e medo de ser denunciada."},
-{nome:"Ex-namorado",texto:"Relacionamento abusivo e término mal resolvido."},
-{nome:"Colega de Trabalho",texto:"Esquema ilegal descoberto por Elisa."},
-{nome:"Vizinho",texto:"Observava a rotina e ouviu discussões."},
-{nome:"Irmão",texto:"Briga por herança e ressentimentos antigos."}
+{
+nome:"Vítima — Elisa",
+img:"https://i.ibb.co/2kQFZtJ/vitima.jpg",
+texto:"Elisa, 24 anos. Inteligente, reservada e temia que alguém próximo estivesse tentando prejudicá-la."
+},
+{
+nome:"Melhor Amiga",
+img:"https://i.ibb.co/Nxv9L3g/amiga.jpg",
+texto:"Inveja crescente e medo de ser denunciada por traições e mentiras."
+},
+{
+nome:"Ex-namorado",
+img:"https://i.ibb.co/8dRZLkN/ex.jpg",
+texto:"Relacionamento abusivo. Não aceitava o término."
+},
+{
+nome:"Colega de Trabalho",
+img:"https://i.ibb.co/k2kC8Xk/colega.jpg",
+texto:"Elisa descobriu um esquema ilegal dentro da empresa."
+},
+{
+nome:"Vizinho",
+img:"https://i.ibb.co/FgZ9X3h/vizinho.jpg",
+texto:"Observava a rotina da vítima e ouviu discussões na noite do desaparecimento."
+},
+{
+nome:"Irmão",
+img:"https://i.ibb.co/4PqzLzT/irmao.jpg",
+texto:"Conflito por herança e ressentimentos antigos."
+}
 ];
 
 let dIndex=0;
@@ -94,6 +123,7 @@ showStep();
 function renderDossie(){
 const d=dossieData[dIndex];
 document.getElementById("dossieBox").innerHTML=`
+<img src="${d.img}">
 <h3>${d.nome}</h3>
 <p>${d.texto}</p>
 <button class="btn btn-option" onclick="dIndex>0&&dIndex--;renderDossie()">⬅</button>
@@ -115,8 +145,6 @@ box.remove();
 i<historia.length-1?mostrarHistoria(i+1):abrirDossie();
 }
 }
-
-/* RESTANTE DO JOGO SEM ALTERAÇÃO */
 </script>
 
 </body>
