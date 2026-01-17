@@ -45,6 +45,15 @@ h1, h2, h3 { color: #ff3b3b; }
   border-radius:10px;
   margin-top:20px;
 }
+.capitulo-map {
+  background: #111;
+  border: 2px solid #ff3b3b;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.capitulo-map h3 { margin-top: 0; }
+.capitulo-map p { margin: 4px 0; }
 </style>
 </head>
 
@@ -57,15 +66,20 @@ h1, h2, h3 { color: #ff3b3b; }
 <p>Um desaparecimento. Muitas mentiras. Uma verdade escondida.</p>
 <button onclick="mostrarIntro()">Iniciar Investigação</button>
 <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
+
+<!-- MAPA DE CAPÍTULOS -->
+<div class="capitulo-map">
+<h3>Mapa de Capítulos</h3>
+<p>Capítulo 01 — Caso Elisa Martins <strong>(Confidência: Alta)</strong></p>
+<p>Capítulo 02 — O Silêncio da Testemunha <strong>(Confidência: Média)</strong></p>
+</div>
 </section>
 
 <!-- INTRO -->
 <section id="intro" class="container hidden">
 <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
 <p>
-<strong>Início:</strong> Elisa desapareceu após enviar mensagens desesperadas.<br><br>
-<strong>Meio:</strong> Amigos próximos mentiram e provas indicaram coação.<br><br>
-<strong>Fim:</strong> O investigador precisa ligar os fatos antes que o culpado escape.
+Elisa desapareceu após enviar mensagens desesperadas. Amigos próximos mentiram e provas indicaram coação. O investigador precisa ligar os fatos antes que o culpado escape.
 </p>
 <button onclick="mostrarDossie()">Acessar Dossiê</button>
 </section>
@@ -76,8 +90,7 @@ h1, h2, h3 { color: #ff3b3b; }
 <p><strong>Vítima:</strong> Elisa Martins</p>
 <p><strong>Status:</strong> Desaparecida</p>
 <p>
-Elisa descobriu um esquema ilegal envolvendo seu chefe.
-Ela foi ameaçada para se manter em silêncio.
+Elisa descobriu um esquema ilegal envolvendo seu chefe. Ela foi ameaçada para se manter em silêncio.
 </p>
 
 <h3>Imagem encontrada no celular</h3>
@@ -89,10 +102,7 @@ Ela foi ameaçada para se manter em silêncio.
 <!-- INTERROGATÓRIO CASO 01 -->
 <section id="interrogatorio" class="container hidden">
 <h2>Interrogatório — Caso 01</h2>
-<p>
-Cada pergunta revela contradições.
-O culpado tenta se proteger.
-</p>
+<p>Cada pergunta revela contradições. O culpado tenta se proteger.</p>
 
 <h3>Lucas</h3>
 <div class="option" onclick="resposta('lucas')">Onde você estava?</div>
@@ -122,9 +132,7 @@ O culpado tenta se proteger.
 <section id="caso2" class="container hidden">
 <h2>Caso 02 — O Silêncio da Testemunha</h2>
 <p>
-<strong>Início:</strong> Uma testemunha ia revelar um esquema.<br><br>
-<strong>Meio:</strong> Antes do depoimento, ela foi encontrada morta.<br><br>
-<strong>Fim:</strong> Alguém poderoso tentou apagar a verdade.
+Uma testemunha ia revelar um esquema. Antes do depoimento, ela foi encontrada morta. Alguém poderoso tentou apagar a verdade.
 </p>
 <button onclick="interrogatorioCaso2()">Iniciar Investigação</button>
 </section>
@@ -229,4 +237,4 @@ btnInstall.classList.add("hidden");
 </script>
 
 </body>
-</html>
+  </html>
