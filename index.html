@@ -45,15 +45,6 @@ h1, h2, h3 { color: #ff3b3b; }
   border-radius:10px;
   margin-top:20px;
 }
-.capitulo-map {
-  background: #111;
-  border: 2px solid #ff3b3b;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.capitulo-map h3 { margin-top: 0; }
-.capitulo-map p { margin: 4px 0; }
 
 /* Estilo para mensagens de celular */
 .mensagem-celular {
@@ -80,13 +71,6 @@ h1, h2, h3 { color: #ff3b3b; }
 <p>Um desaparecimento. Mentiras entre amigos, segredos sombrios e uma verdade que ninguém quer revelar.</p>
 <button onclick="mostrarTelaCasos()">Iniciar Investigação</button>
 <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
-
-<!-- MAPA DE CAPÍTULOS -->
-<div class="capitulo-map">
-<h3>Mapa de Capítulos</h3>
-<p>Capítulo 01 — Caso Elisa Martins <strong>(Confidência: Alta)</strong></p>
-<p>Capítulo 02 — O Silêncio da Testemunha <strong>(Confidência: Média)</strong></p>
-</div>
 </section>
 
 <!-- NOVA TELA DE SELEÇÃO DE CASOS -->
@@ -256,7 +240,7 @@ function playNotif(){
   audio.play();
 }
 
-// NOVA FUNÇÃO DE SELEÇÃO DE CASO
+// FUNÇÕES PARA SELEÇÃO DE CASO
 function mostrarTelaCasos(){
   esconderTudo();
   telaCasos.classList.remove("hidden");
