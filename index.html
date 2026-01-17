@@ -25,12 +25,7 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 .game-box{padding:20px;border-top:2px solid #38bdf8;animation:fadeIn .4s ease;text-align:center}
 .game-box img{width:100%;border-radius:12px;margin:10px 0;border:2px solid #38bdf8}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-#btnInstall{display:none}
-
-/* ESCONDER BOTÃO DO DOSSIÊ NA HOME */
 .content .btn-option{display:none}
-
-/* DOSSIÊ */
 .dossie{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:20;display:none;overflow:auto}
 .dossie-box{max-width:400px;margin:40px auto;background:#020617;border-radius:16px;padding:20px;text-align:center}
 .dossie h3{color:#38bdf8}
@@ -44,11 +39,10 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 
 <div class="app">
 <div class="cover"></div>
-<div class="content">
+<div class="content" id="home">
 <h2>Caso 01 — O Desaparecimento de Elisa</h2>
 <p>Cada escolha pode revelar… ou esconder a verdade.</p>
 <button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
-<button id="btnInstall" class="btn btn-option">📥 Instalar Aplicativo</button>
 </div>
 </div>
 
@@ -58,81 +52,27 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 
 <script>
 const historia=[
-{
-texto:"Elisa desapareceu numa noite fria e silenciosa.",
-img:"https://i.ibb.co/3c2d8nY/cena-crime.jpg"
-},
-{
-texto:"O quarto da vítima estava revirado, mas sem sinais de arrombamento.",
-img:"https://i.ibb.co/ZV0wWqN/quarto-vitima.jpg"
-},
-{
-texto:"O celular de Elisa foi encontrado escondido atrás do guarda-roupa.",
-img:"https://i.ibb.co/D9FzR5S/celular-vitima.jpg"
-},
-{
-texto:"Mensagens apagadas indicam que alguém próximo a ameaçava.",
-img:null
-},
-{
-texto:"Agora, você deve interrogar os suspeitos.",
-img:null
-}
+{texto:"Elisa desapareceu numa noite fria e silenciosa.",img:"https://i.ibb.co/3c2d8nY/cena-crime.jpg"},
+{texto:"O quarto da vítima estava revirado, mas sem sinais de arrombamento.",img:"https://i.ibb.co/ZV0wWqN/quarto-vitima.jpg"},
+{texto:"O celular de Elisa foi encontrado escondido atrás do guarda-roupa.",img:"https://i.ibb.co/D9FzR5S/celular-vitima.jpg"},
+{texto:"Mensagens apagadas indicam ameaças diretas.",img:null},
+{texto:"Você precisa analisar as provas antes de interrogar.",img:null}
 ];
 
-let step=0;
-let culpado=null;
+// ACRESCENTADO
+let provasColetadas=0;
 
-/* DOSSIÊ */
 const dossieData=[
-{
-nome:"Melhor Amiga",
-img:"https://i.ibb.co/Nxv9L3g/amiga.jpg",
-texto:"Diz que não viu Elisa na noite do desaparecimento."
-},
-{
-nome:"Ex-namorado",
-img:"https://i.ibb.co/8dRZLkN/ex.jpg",
-texto:"Afirma que estava em casa, mas não apresenta provas."
-},
-{
-nome:"Colega de Trabalho",
-img:"https://i.ibb.co/k2kC8Xk/colega.jpg",
-texto:"Fica nervoso ao ser questionado sobre o celular."
-},
-{
-nome:"Vizinho",
-img:"https://i.ibb.co/FgZ9X3h/vizinho.jpg",
-texto:"Relata gritos vindos do apartamento de Elisa."
-}
+{nome:"Melhor Amiga",img:"https://i.ibb.co/Nxv9L3g/amiga.jpg",texto:"Sem provas diretas."},
+{nome:"Ex-namorado",img:"https://i.ibb.co/8dRZLkN/ex.jpg",texto:"Álibi fraco."},
+{nome:"Colega de Trabalho",img:"https://i.ibb.co/k2kC8Xk/colega.jpg",texto:"Mensagens apagadas no celular da vítima."},
+{nome:"Vizinho",img:"https://i.ibb.co/FgZ9X3h/vizinho.jpg",texto:"Apenas testemunha."}
 ];
 
 let dIndex=0;
 
-function abrirDossie(){
-document.getElementById("dossie").style.display="block";
-renderDossie();
-}
-
-function fecharDossie(){
-document.getElementById("dossie").style.display="none";
-interrogatorio();
-}
-
-function renderDossie(){
-const d=dossieData[dIndex];
-document.getElementById("dossieBox").innerHTML=`
-<img src="${d.img}">
-<h3>${d.nome}</h3>
-<p>${d.texto}</p>
-<button class="btn btn-option" onclick="dIndex>0&&dIndex--;renderDossie()">⬅</button>
-<button class="btn btn-option" onclick="dIndex<dossieData.length-1&&dIndex++;renderDossie()">➡</button>
-<button class="btn btn-primary" onclick="fecharDossie()">Interrogar</button>
-`;
-}
-
 function startGame(){
-document.querySelector(".content").style.display="none";
+document.getElementById("home").style.display="none"; // ACRESCENTADO
 mostrarHistoria(0);
 }
 
@@ -143,7 +83,7 @@ box.className="game-box";
 box.innerHTML=`
 <p>${historia[i].texto}</p>
 ${historia[i].img?`<img src="${historia[i].img}">`:""}
-<button class="btn btn-primary">${i<historia.length-1?"Continuar":"Abrir Dossiê"}</button>
+<button class="btn btn-primary">${i<historia.length-1?"Continuar":"Analisar Dossiê"}</button>
 `;
 app.appendChild(box);
 box.querySelector("button").onclick=()=>{
@@ -152,13 +92,47 @@ i<historia.length-1?mostrarHistoria(i+1):abrirDossie();
 }
 }
 
-/* INTERROGATÓRIO */
+function abrirDossie(){
+document.getElementById("dossie").style.display="block";
+renderDossie();
+}
+
+function renderDossie(){
+const d=dossieData[dIndex];
+document.getElementById("dossieBox").innerHTML=`
+<img src="${d.img}">
+<h3>${d.nome}</h3>
+<p>${d.texto}</p>
+<button class="btn btn-option" onclick="coletarProva()">🔎 Analisar Prova</button>
+<button class="btn btn-option" onclick="dIndex>0&&dIndex--;renderDossie()">⬅</button>
+<button class="btn btn-option" onclick="dIndex<dossieData.length-1&&dIndex++;renderDossie()">➡</button>
+<button class="btn btn-primary" onclick="fecharDossie()">Finalizar Análise</button>
+`;
+}
+
+// ACRESCENTADO
+function coletarProva(){
+provasColetadas++;
+alert("Prova analisada");
+}
+
+function fecharDossie(){
+document.getElementById("dossie").style.display="none";
+if(provasColetadas>=2){
+interrogatorio();
+}else{
+alert("Você precisa analisar mais provas.");
+abrirDossie();
+}
+}
+
+// ACRESCENTADO – INTERROGATÓRIO INTERATIVO
 function interrogatorio(){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
 box.innerHTML=`
-<h3>Quem é o culpado?</h3>
+<h3>Com base nas provas, quem é o culpado?</h3>
 <button class="btn btn-option" onclick="final(false)">Melhor Amiga</button>
 <button class="btn btn-option" onclick="final(false)">Ex-namorado</button>
 <button class="btn btn-option" onclick="final(true)">Colega de Trabalho</button>
@@ -167,20 +141,21 @@ box.innerHTML=`
 app.appendChild(box);
 }
 
-/* FINAL */
+// FINAL BASEADO EM PROVAS
 function final(acertou){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
 box.innerHTML=acertou?`
-<h2>✅ Caso Resolvido</h2>
-<p>O colega de trabalho foi preso. Elisa descobriu um esquema ilegal e foi silenciada.</p>
-<p>Parabéns, investigador.</p>
+<h2>🚔 Caso Resolvido</h2>
+<p>As provas do celular e do trabalho levaram à prisão do colega.</p>
+<p>Elisa descobriu um esquema ilegal e foi silenciada.</p>
+<p><strong>Justiça foi feita.</strong></p>
 `:
 `
-<h2>❌ Investigação Falhou</h2>
+<h2>❌ Conclusão Incorreta</h2>
+<p>As provas não sustentam essa acusação.</p>
 <p>O verdadeiro culpado escapou.</p>
-<p>Tente novamente.</p>
 `;
 app.appendChild(box);
 }
