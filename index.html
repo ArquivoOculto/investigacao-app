@@ -89,72 +89,55 @@ const historia=[
 "Agora você deve analisar as provas."
 ];
 
-// PROVAS
+// PROVAS (com resultado explícito)
 const provas=[
 {
 titulo:"📱 Celular de Elisa",
 img:"https://i.ibb.co/qkKk6V9/phone.jpg",
 texto:"Mensagens apagadas e ameaças recentes.",
-significado:"Elisa estava sendo pressionada por alguém próximo."
+significado:"Resultado: Elisa estava sendo coagida por alguém do trabalho."
 },
 {
 titulo:"📹 Câmeras de Segurança",
 img:"https://i.ibb.co/G2Q4k2N/camera.jpg",
-texto:"Ela conversa com alguém horas antes do sumiço.",
-significado:"O suspeito mentiu ao dizer que não a viu."
+texto:"Ela conversa com um homem horas antes do sumiço.",
+significado:"Resultado: O colega de trabalho mentiu no depoimento."
 },
 {
 titulo:"📓 Anotações",
 img:"https://i.ibb.co/8d9v4mM/notebook.jpg",
-texto:"Ela escreveu que descobriu algo ilegal.",
-significado:"O crime pode ter sido para silenciá-la."
+texto:"Elisa anotou provas de um esquema ilegal.",
+significado:"Resultado: O crime teve motivação para silenciar a vítima."
 },
 {
 titulo:"👂 Testemunha",
 img:"https://i.ibb.co/NxP9fL0/witness.jpg",
-texto:"Discussão intensa na noite do crime.",
-significado:"Não foi um desaparecimento voluntário."
+texto:"Discussão intensa foi ouvida na noite do crime.",
+significado:"Resultado: O encontro terminou em conflito."
 }
 ];
 
-// INTERROGATÓRIO
+// INTERROGATÓRIO FINAL
 const perguntas=[
-{
-q:"Elisa descobriu algo ilegal no trabalho?",
-op:[
-{t:"Sim",c:true},
-{t:"Não",c:false}
-]
-},
-{
-q:"Seu número aparece nas mensagens apagadas?",
-op:[
-{t:"Não sei explicar",c:false},
-{t:"Sim, discutimos",c:true}
-]
-},
-{
-q:"Você encontrou Elisa naquele dia?",
-op:[
-{t:"Não vi ela",c:false},
-{t:"Sim, depois do trabalho",c:true}
-]
-},
-{
-q:"Houve uma discussão naquela noite?",
-op:[
-{t:"Não",c:false},
-{t:"Sim, perdi o controle",c:true}
-]
-}
+{q:"Elisa descobriu algo ilegal no trabalho?",op:[{t:"Sim",c:true},{t:"Não",c:false}]},
+{q:"Seu número aparece nas mensagens apagadas?",op:[{t:"Não sei explicar",c:false},{t:"Sim, discutimos",c:true}]},
+{q:"Você encontrou Elisa naquele dia?",op:[{t:"Não vi ela",c:false},{t:"Sim, depois do trabalho",c:true}]},
+{q:"Houve uma discussão naquela noite?",op:[{t:"Não",c:false},{t:"Sim, perdi o controle",c:true}]}
 ];
 
-let etapa=0;
+// 👉 INTERROGATÓRIO EXTRA (ANTES DO FINAL)
+const interrogatorioExtra=[
+{q:"Por que você apagou as mensagens?",c:true},
+{q:"Elisa ameaçou denunciar o esquema?",c:true},
+{q:"Você estava nervoso naquela noite?",c:true}
+];
+
 let provaIndex=0;
 let pontos=0;
 let perguntaIndex=0;
+let extraIndex=0;
 
-// INICIAR
+// INÍCIO
 function startGame(){
 document.querySelector(".content").innerHTML="";
 mostrarHistoria(0);
@@ -164,8 +147,7 @@ function mostrarHistoria(i){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
-box.innerHTML=`
-<p>${historia[i]}</p>
+box.innerHTML=`<p>${historia[i]}</p>
 <button class="btn btn-primary">${i<historia.length-1?"Continuar":"Analisar Provas"}</button>`;
 app.appendChild(box);
 
@@ -187,60 +169,66 @@ document.getElementById("provasBox").innerHTML=`
 <h3>${p.titulo}</h3>
 <img src="${p.img}">
 <p>${p.texto}</p>
-<p><strong>O que isso significa:</strong><br>${p.significado}</p>
+<p><strong>${p.significado}</strong></p>
 <button class="btn btn-option" onclick="prevProva()">⬅</button>
 <button class="btn btn-option" onclick="nextProva()">➡</button>
-<button class="btn btn-primary" onclick="fecharProvas()">Ir para Interrogatório</button>
-`;
+<button class="btn btn-primary" onclick="fecharProvas()">Interrogatório Inicial</button>`;
 }
 
-function nextProva(){
-if(provaIndex<provas.length-1){provaIndex++;renderProva();}
-}
-function prevProva(){
-if(provaIndex>0){provaIndex--;renderProva();}
-}
+function nextProva(){if(provaIndex<provas.length-1){provaIndex++;renderProva();}}
+function prevProva(){if(provaIndex>0){provaIndex--;renderProva();}}
+
 function fecharProvas(){
 document.getElementById("provas").style.display="none";
-abrirInterrogatorio();
+abrirInterrogatorioExtra();
 }
 
-// INTERROGATÓRIO
-function abrirInterrogatorio(){
+// INTERROGATÓRIO EXTRA
+function abrirInterrogatorioExtra(){
 document.getElementById("interrogatorio").style.display="block";
-renderPergunta();
+renderExtra();
 }
 
+function renderExtra(){
+const q=interrogatorioExtra[extraIndex];
+document.getElementById("interrogatorioBox").innerHTML=`
+<h3>Interrogatório</h3>
+<p>${q.q}</p>
+<button class="btn btn-option" onclick="extraResposta(true)">Responder</button>`;
+}
+
+function extraResposta(){
+pontos++;
+extraIndex++;
+extraIndex<interrogatorioExtra.length?renderExtra():renderPergunta();
+}
+
+// INTERROGATÓRIO FINAL
 function renderPergunta(){
 const p=perguntas[perguntaIndex];
-let html=`<h3>Interrogatório</h3><p>${p.q}</p>`;
+let html=`<h3>Interrogatório Final</h3><p>${p.q}</p>`;
 p.op.forEach(o=>{
 html+=`<button class="btn btn-option" onclick="responder(${o.c})">${o.t}</button>`;
 });
 document.getElementById("interrogatorioBox").innerHTML=html;
 }
 
-function responder(correta){
-if(correta) pontos++;
+function responder(c){
+if(c)pontos++;
 perguntaIndex++;
-if(perguntaIndex<perguntas.length){
-renderPergunta();
-}else{
-finalizar();
-}
+perguntaIndex<perguntas.length?renderPergunta():finalizar();
 }
 
 // FINAL
 function finalizar(){
-let texto=pontos>=3
-?"✅ CONCLUSÃO CORRETA<br>O colega de trabalho tentou silenciar Elisa após ela descobrir um esquema ilegal."
-:"❌ CASO NÃO SOLUCIONADO<br>As escolhas erradas permitiram que o culpado escapasse.";
+let texto=pontos>=6
+?"✅ CASO SOLUCIONADO<br>O colega de trabalho é o culpado. Elisa foi silenciada."
+:"❌ CASO INCONCLUSIVO<br>Faltaram decisões corretas.";
 
 document.getElementById("interrogatorioBox").innerHTML=`
-<h3>Resultado</h3>
+<h3>Conclusão</h3>
 <p>${texto}</p>
-<button class="btn btn-primary" onclick="location.reload()">Jogar Novamente</button>
-`;
+<button class="btn btn-primary" onclick="location.reload()">Reiniciar</button>`;
 }
 </script>
 
