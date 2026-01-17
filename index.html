@@ -9,216 +9,186 @@
 <meta name="theme-color" content="#000000">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0e0e0e;
-  color: #fff;
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0b0b0b;
+  color:#fff;
 }
-.hidden { display: none; }
-
-button, .install-btn {
-  padding: 12px 20px;
-  background: #b30000;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-top: 10px;
+.hidden{display:none}
+.container{max-width:900px;margin:auto;padding:20px}
+h1,h2,h3{color:#ff3b3b}
+button{
+  background:#b30000;
+  color:#fff;
+  border:none;
+  padding:12px 18px;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:10px;
 }
-
-button:hover, .install-btn:hover {
-  background: #ff0000;
+button:hover{background:#ff0000}
+img{width:100%;border-radius:10px;margin:15px 0}
+.option{
+  background:#1c1c1c;
+  padding:15px;
+  border-radius:8px;
+  margin:10px 0;
+  cursor:pointer;
 }
-
-.container {
-  padding: 20px;
-  max-width: 800px;
-  margin: auto;
+.option:hover{background:#2a2a2a}
+.mensagem{
+  background:#1c1c1c;
+  border-left:4px solid #ff3b3b;
+  padding:15px;
+  margin:15px 0;
+  border-radius:6px;
 }
-
-img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
-}
-
-h1, h2, h3 {
-  color: #ff3b3b;
-}
-
-.option {
-  background: #1c1c1c;
-  padding: 12px;
-  border-radius: 6px;
-  margin: 10px 0;
-  cursor: pointer;
-}
-
-.option:hover {
-  background: #2a2a2a;
-}
-
-.mensagem-celular {
-  background: #1c1c1c;
-  border-left: 4px solid #ff3b3b;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 6px;
-}
-
-.suspeito-card {
+.suspeito-card{
   display:flex;
   align-items:center;
   justify-content:space-between;
   background:#222;
   padding:10px;
-  margin:8px 0;
-  border-radius:6px;
+  border-radius:8px;
+  margin:10px 0;
 }
-
-.suspeito-card img {
-  width:80px;
-  border-radius:6px;
-}
+.suspeito-card img{width:80px}
 </style>
 </head>
 
 <body>
 
+<!-- CAPA -->
 <section id="capa" class="container">
   <h1>INVESTIGAÇÃO</h1>
-  <p>Um desaparecimento. Mentiras, segredos e decisões finais.</p>
-  <button onclick="mostrarTelaCasos()">Iniciar Investigação</button>
-
-  <div id="btnInstall" class="install-btn hidden">
-    📥 Instalar Investigação
-  </div>
+  <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
+  <p>
+    Um desaparecimento.  
+    Mentiras entre amigos.  
+    Segredos enterrados no passado.  
+    Uma verdade que ninguém quer revelar.
+  </p>
+  <button onclick="irCasos()">Iniciar Investigação</button>
+  <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
 </section>
 
-<section id="telaCasos" class="container hidden">
-  <h2>Escolha um Caso</h2>
-  <div class="option" onclick="iniciarCaso(1)">Caso 01 — Elisa Martins</div>
-  <div class="option" onclick="iniciarCaso(2)">Caso 02 — O Silêncio da Testemunha</div>
-  <div class="option" onclick="iniciarCaso(3)">Caso 03 — O Mistério do Laboratório</div>
-  <div class="option" onclick="iniciarCaso(4)">Caso 04 — O Roubo da Galeria</div>
+<!-- LISTA DE CASOS -->
+<section id="casos" class="container hidden">
+  <h2>Escolha o Caso</h2>
+  <div class="option" onclick="iniciarCaso()">Capítulo 01 — Caso Elisa Martins</div>
 </section>
 
+<!-- INTRO CASO -->
 <section id="intro" class="container hidden">
-  <p>Mensagens estranhas indicam que Elisa sabia que algo ia acontecer.</p>
-  <button onclick="mostrarCena1()">Acessar Dossiê</button>
+  <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
+  <p>
+    Elisa Martins, 26 anos, desapareceu sem deixar rastros.  
+    Horas antes, enviou mensagens estranhas para amigos e familiares.  
+    Algo a estava assustando.
+  </p>
+  <button onclick="cena1()">Acessar Dossiê</button>
 </section>
 
+<!-- CENA 1 -->
 <section id="cena1" class="container hidden">
-  <h2>Última Mensagem</h2>
-  <div class="mensagem-celular">
-    "Se algo me acontecer, procure no escritório."
+  <h2>Cena 1 — Última Mensagem</h2>
+  <img src="https://i.ibb.co/QC1hQ9P/whatsapp.jpg">
+  <div class="mensagem">
+    “Se algo me acontecer, procure o que está escondido no escritório.”
   </div>
-  <button onclick="mostrarCena2()">Continuar</button>
+  <button onclick="cena2()">Continuar</button>
 </section>
 
+<!-- CENA 2 -->
 <section id="cena2" class="container hidden">
-  <h2>Local Suspeito</h2>
-  <div class="mensagem-celular">
-    Objetos fora do lugar indicam conflito.
+  <h2>Cena 2 — O Escritório</h2>
+  <img src="https://i.ibb.co/kqzHBNZ/office-dark.jpg">
+  <div class="mensagem">
+    Gavetas abertas. Papéis rasgados.  
+    Alguém procurava algo — ou tentou apagar provas.
   </div>
-  <button onclick="mostrarCena3()">Continuar</button>
+  <button onclick="cena3()">Continuar</button>
 </section>
 
+<!-- CENA 3 -->
 <section id="cena3" class="container hidden">
-  <h2>Prova Encontrada</h2>
-  <p>Uma foto revela pressão emocional.</p>
-  <button onclick="mostrarInterrogatorio1()">Interrogar Suspeitos</button>
+  <h2>Cena 3 — A Foto</h2>
+  <img src="https://i.ibb.co/hFQwkyt0/IMG-20260116-WA0028.jpg">
+  <div class="mensagem">
+    Uma foto recente.  
+    Elisa parece nervosa.  
+    Ao fundo, alguém observa.
+  </div>
+  <button onclick="interrogatorio()">Seguir para Interrogatório</button>
 </section>
 
-<section id="interrogatorio1" class="container hidden">
-  <h2>Interrogatório — Caso 01</h2>
-  <div id="suspeitos1"></div>
+<!-- INTERROGATÓRIO -->
+<section id="interrogatorio" class="container hidden">
+  <h2>Interrogatório</h2>
+  <div id="suspeitos"></div>
 </section>
 
-<section id="resultado1" class="container hidden">
+<!-- ESCOLHA -->
+<section id="resultado" class="container hidden">
   <h2>Quem deve ser preso?</h2>
-  <div id="escolhaCulpado1"></div>
-  <button onclick="iniciarCaso(2)">➡ Próximo Caso</button>
+  <div id="escolha"></div>
+</section>
+
+<!-- FINAL -->
+<section id="final" class="container hidden">
+  <h2>Conclusão</h2>
+  <img src="https://i.ibb.co/2Z8b2Fh/renato-prisao.png">
+  <p>
+    O suspeito é algemado.  
+    A verdade começa a vir à tona.  
+    Mas este é apenas o primeiro caso…
+  </p>
+  <button onclick="irCasos()">Voltar aos Casos</button>
 </section>
 
 <script>
-// ===== CONTROLE DE TELAS =====
-function esconderTudo() {
-  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-}
+function esconder(){document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"))}
+function irCasos(){esconder();casos.classList.remove("hidden")}
+function iniciarCaso(){esconder();intro.classList.remove("hidden")}
+function cena1(){esconder();document.getElementById("cena1").classList.remove("hidden")}
+function cena2(){esconder();document.getElementById("cena2").classList.remove("hidden")}
+function cena3(){esconder();document.getElementById("cena3").classList.remove("hidden")}
+function interrogatorio(){esconder();document.getElementById("interrogatorio").classList.remove("hidden")}
 
-function mostrarTelaCasos() {
-  esconderTudo();
-  telaCasos.classList.remove("hidden");
-}
-
-function iniciarCaso(n) {
-  esconderTudo();
-  if (n === 1) intro.classList.remove("hidden");
-}
-
-function mostrarCena1(){ esconderTudo(); cena1.classList.remove("hidden"); }
-function mostrarCena2(){ esconderTudo(); cena2.classList.remove("hidden"); }
-function mostrarCena3(){ esconderTudo(); cena3.classList.remove("hidden"); }
-function mostrarInterrogatorio1(){ esconderTudo(); interrogatorio1.classList.remove("hidden"); }
-
-// ===== SUSPEITOS =====
-const suspeitos = [
-  { nome:"Lucas", alibi:"Trabalhando", foto:"https://i.ibb.co/L0kP6vF/lucas.png" },
-  { nome:"Marina", alibi:"Em reunião", foto:"https://i.ibb.co/3m5wFpx/marina.png" },
-  { nome:"Renato", alibi:"Sozinho", foto:"https://i.ibb.co/2Z8b2Fh/renato-prisao.png" }
+const suspeitos=[
+ {nome:"Lucas",foto:"https://i.ibb.co/L0kP6vF/lucas.png",fala:"Eu estava no trabalho."},
+ {nome:"Marina",foto:"https://i.ibb.co/3m5wFpx/marina.png",fala:"Não notei nada estranho."},
+ {nome:"Renato",foto:"https://i.ibb.co/2Z8b2Fh/renato-prisao.png",fala:"Eu precisava de distância."}
 ];
 
-const suspeitosDiv = document.getElementById("suspeitos1");
-
-suspeitos.forEach(s => {
-  let div = document.createElement("div");
-  div.className = "option";
-  div.innerHTML = `<strong>${s.nome}</strong><br>Álibi: ${s.alibi}`;
-  div.onclick = () => mostrarResultado(s.nome);
-  suspeitosDiv.appendChild(div);
+let container=document.getElementById("suspeitos");
+suspeitos.forEach(s=>{
+ let div=document.createElement("div");
+ div.className="option";
+ div.innerHTML=`<strong>${s.nome}</strong><br>${s.fala}`;
+ div.onclick=()=>escolher();
+ container.appendChild(div);
 });
 
-function mostrarResultado(nome) {
-  esconderTudo();
-  resultado1.classList.remove("hidden");
-
-  escolhaCulpado1.innerHTML = `
-    <div class="suspeito-card">
-      <img src="${suspeitos.find(s=>s.nome===nome).foto}">
-      <strong>${nome}</strong>
-      <button onclick="verificar('${nome}')">Prender</button>
-    </div>
-  `;
+function escolher(){
+ esconder();
+ resultado.classList.remove("hidden");
+ let e=document.getElementById("escolha");
+ e.innerHTML="";
+ suspeitos.forEach(s=>{
+  let c=document.createElement("div");
+  c.className="suspeito-card";
+  c.innerHTML=`<img src="${s.foto}"><strong>${s.nome}</strong>
+  <button onclick="final()">Prender</button>`;
+  e.appendChild(c);
+ });
 }
 
-function verificar(nome){
-  if(nome==="Renato"){
-    alert("Culpado preso! Caso resolvido.");
-  } else {
-    if(confirm("Tem certeza disso?")){
-      alert("Pessoa errada presa.");
-    }
-  }
+function final(){
+ esconder();
+ document.getElementById("final").classList.remove("hidden");
 }
-
-// ===== PWA INSTALL =====
-let deferredPrompt;
-const btnInstall = document.getElementById("btnInstall");
-
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  btnInstall.classList.remove("hidden");
-});
-
-btnInstall.addEventListener("click", async () => {
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  btnInstall.classList.add("hidden");
-});
 </script>
 
 </body>
