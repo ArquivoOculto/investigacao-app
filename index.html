@@ -2,235 +2,191 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Investigação Criminal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investigação</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
 
 <style>
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7eb}
-
-.intro{
-position:fixed;inset:0;
-background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat;
-display:flex;align-items:center;justify-content:center;
-z-index:9;animation:fadeOut 1s ease forwards;animation-delay:2.5s}
-.intro::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.7)}
-.intro h1{position:relative;z-index:1;font-size:2rem;text-shadow:0 0 20px #38bdf8}
-@keyframes fadeOut{to{opacity:0;visibility:hidden}}
-
-.app{max-width:420px;margin:auto;min-height:100vh;background:#020617;border-radius:18px;overflow:hidden}
-.cover{
-height:180px;
-background:url("https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png") center/cover no-repeat
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0e0e0e;
+  color: #fff;
 }
-.content{padding:20px;text-align:center}
 
-.btn{
-width:100%;margin-top:10px;padding:14px;
-border-radius:14px;border:none;
-cursor:pointer;font-weight:bold
-}
-.btn-primary{background:#38bdf8;color:#020617}
-.btn-option{background:#111827;color:#e5e7eb;border:1px solid #38bdf8}
-.btn-option:hover{background:#38bdf8;color:#020617}
+.hidden { display: none; }
 
-.game-box{
-padding:20px;border-top:2px solid #38bdf8;
-animation:fadeIn .4s ease;text-align:center
+button {
+  padding: 12px 20px;
+  background: #b30000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
 }
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-img{max-width:100%;border-radius:12px;margin:10px 0}
+button:hover {
+  background: #ff0000;
+}
 
-/* MODAIS */
-.modal{
-position:fixed;inset:0;
-background:rgba(0,0,0,.9);
-display:none;z-index:20;overflow:auto
+.container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
 }
-.modal-box{
-max-width:400px;margin:40px auto;
-background:#020617;border-radius:16px;padding:20px
+
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
 }
-.modal h3{color:#38bdf8}
+
+h1, h2, h3 {
+  color: #ff3b3b;
+}
+
+.option {
+  background: #1c1c1c;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #2a2a2a;
+}
 </style>
 </head>
 
 <body>
 
-<div class="intro"><h1>Investigação Criminal</h1></div>
+<!-- CAPA -->
+<section id="capa" class="container">
+  <h1>INVESTIGAÇÃO</h1>
+  <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
+  <p>Um desaparecimento. Muitas mentiras. Uma verdade escondida.</p>
+  <button onclick="mostrarIntro()">Iniciar Investigação</button>
+</section>
 
-<div class="app">
-<div class="cover"></div>
-<div class="content">
-<h2>Caso 01 — O Desaparecimento de Elisa</h2>
-<p>Cada escolha pode revelar… ou esconder a verdade.</p>
-<button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
-</div>
-</div>
+<!-- INTRO -->
+<section id="intro" class="container hidden">
+  <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
+  <p>
+    Elisa desapareceu após enviar mensagens suspeitas.
+    Seu celular foi encontrado danificado.
+    Você é o investigador responsável.
+  </p>
+  <button onclick="mostrarDossie()">Acessar Dossiê</button>
+</section>
 
-<!-- MODAL PROVAS -->
-<div class="modal" id="provas">
-<div class="modal-box" id="provasBox"></div>
-</div>
+<!-- DOSSIÊ -->
+<section id="dossie" class="container hidden">
+  <h2>Dossiê do Caso</h2>
 
-<!-- MODAL INTERROGATÓRIO -->
-<div class="modal" id="interrogatorio">
-<div class="modal-box" id="interrogatorioBox"></div>
-</div>
+  <p><strong>Vítima:</strong> Elisa Martins</p>
+  <p><strong>Status:</strong> Desaparecida</p>
+
+  <h3>Provas encontradas</h3>
+  <ul>
+    <li><strong>Celular:</strong> Contém mensagens apagadas e uma imagem comprometedora.</li>
+    <li><strong>Testemunhas:</strong> Três suspeitos com versões diferentes.</li>
+    <li><strong>Imagem no celular:</strong> Indício de coação.</li>
+  </ul>
+
+  <h3>Imagem encontrada no celular de Elisa</h3>
+  <p>
+    Esta imagem foi enviada minutos antes do desaparecimento.
+    Ela indica que Elisa estava sendo coagida.
+  </p>
+
+  <img src="https://i.ibb.co/hFQwkyt0/IMG-20260116-WA0028.jpg">
+
+  <button onclick="mostrarInterrogatorio()">Iniciar Interrogatório</button>
+</section>
+
+<!-- INTERROGATÓRIO -->
+<section id="interrogatorio" class="container hidden">
+  <h2>Interrogatório</h2>
+  <p>Escolha com atenção. Cada resposta influencia o resultado.</p>
+
+  <h3>Suspeito 1: Lucas (ex-namorado)</h3>
+  <div class="option" onclick="resposta('lucas',1)">Onde você estava na noite do desaparecimento?</div>
+  <div class="option" onclick="resposta('lucas',2)">Por que Elisa parecia com medo de você?</div>
+
+  <h3>Suspeito 2: Marina (melhor amiga)</h3>
+  <div class="option" onclick="resposta('marina',1)">Por que você mentiu sobre a última ligação?</div>
+  <div class="option" onclick="resposta('marina',2)">Qual sua relação com a imagem encontrada?</div>
+
+  <h3>Suspeito 3: Renato (chefe)</h3>
+  <div class="option" onclick="resposta('renato',1)">Você pressionou Elisa no trabalho?</div>
+  <div class="option" onclick="resposta('renato',2)">Por que seu número aparece nas mensagens apagadas?</div>
+</section>
+
+<!-- RESULTADO -->
+<section id="resultado" class="container hidden">
+  <h2>Conclusão da Investigação</h2>
+  <p id="textoResultado"></p>
+  <button onclick="location.reload()">Reiniciar Jogo</button>
+</section>
 
 <script>
-// HISTÓRIA
-const historia=[
-"Elisa desapareceu numa noite fria e silenciosa.",
-"Nos últimos dias, ela demonstrava medo e nervosismo.",
-"Seu celular escondia mensagens apagadas.",
-"Testemunhas ouviram uma discussão.",
-"Agora você deve analisar as provas."
-];
+let pistas = {
+  lucas: 0,
+  marina: 0,
+  renato: 0
+};
 
-// PROVAS (com resultado explícito)
-const provas=[
-{
-titulo:"📱 Celular de Elisa",
-img:"https://i.ibb.co/qkKk6V9/phone.jpg",
-texto:"Mensagens apagadas e ameaças recentes.",
-significado:"Resultado: Elisa estava sendo coagida por alguém do trabalho."
-},
-{
-titulo:"📹 Câmeras de Segurança",
-img:"https://i.ibb.co/G2Q4k2N/camera.jpg",
-texto:"Ela conversa com um homem horas antes do sumiço.",
-significado:"Resultado: O colega de trabalho mentiu no depoimento."
-},
-{
-titulo:"📓 Anotações",
-img:"https://i.ibb.co/8d9v4mM/notebook.jpg",
-texto:"Elisa anotou provas de um esquema ilegal.",
-significado:"Resultado: O crime teve motivação para silenciar a vítima."
-},
-{
-titulo:"👂 Testemunha",
-img:"https://i.ibb.co/NxP9fL0/witness.jpg",
-texto:"Discussão intensa foi ouvida na noite do crime.",
-significado:"Resultado: O encontro terminou em conflito."
-}
-];
-
-// INTERROGATÓRIO FINAL
-const perguntas=[
-{q:"Elisa descobriu algo ilegal no trabalho?",op:[{t:"Sim",c:true},{t:"Não",c:false}]},
-{q:"Seu número aparece nas mensagens apagadas?",op:[{t:"Não sei explicar",c:false},{t:"Sim, discutimos",c:true}]},
-{q:"Você encontrou Elisa naquele dia?",op:[{t:"Não vi ela",c:false},{t:"Sim, depois do trabalho",c:true}]},
-{q:"Houve uma discussão naquela noite?",op:[{t:"Não",c:false},{t:"Sim, perdi o controle",c:true}]}
-];
-
-// 👉 INTERROGATÓRIO EXTRA (ANTES DO FINAL)
-const interrogatorioExtra=[
-{q:"Por que você apagou as mensagens?",c:true},
-{q:"Elisa ameaçou denunciar o esquema?",c:true},
-{q:"Você estava nervoso naquela noite?",c:true}
-];
-
-let provaIndex=0;
-let pontos=0;
-let perguntaIndex=0;
-let extraIndex=0;
-
-// INÍCIO
-function startGame(){
-document.querySelector(".content").innerHTML="";
-mostrarHistoria(0);
+function mostrarIntro() {
+  esconderTudo();
+  document.getElementById("intro").classList.remove("hidden");
 }
 
-function mostrarHistoria(i){
-const app=document.querySelector(".app");
-const box=document.createElement("div");
-box.className="game-box";
-box.innerHTML=`<p>${historia[i]}</p>
-<button class="btn btn-primary">${i<historia.length-1?"Continuar":"Analisar Provas"}</button>`;
-app.appendChild(box);
-
-box.querySelector("button").onclick=()=>{
-box.remove();
-i<historia.length-1?mostrarHistoria(i+1):abrirProvas();
-}
+function mostrarDossie() {
+  esconderTudo();
+  document.getElementById("dossie").classList.remove("hidden");
 }
 
-// PROVAS
-function abrirProvas(){
-document.getElementById("provas").style.display="block";
-renderProva();
+function mostrarInterrogatorio() {
+  esconderTudo();
+  document.getElementById("interrogatorio").classList.remove("hidden");
 }
 
-function renderProva(){
-const p=provas[provaIndex];
-document.getElementById("provasBox").innerHTML=`
-<h3>${p.titulo}</h3>
-<img src="${p.img}">
-<p>${p.texto}</p>
-<p><strong>${p.significado}</strong></p>
-<button class="btn btn-option" onclick="prevProva()">⬅</button>
-<button class="btn btn-option" onclick="nextProva()">➡</button>
-<button class="btn btn-primary" onclick="fecharProvas()">Interrogatório Inicial</button>`;
+function resposta(suspeito, tipo) {
+  pistas[suspeito]++;
+
+  if (pistas[suspeito] >= 2) {
+    concluir(suspeito);
+  } else {
+    alert("Resposta registrada. Continue investigando.");
+  }
 }
 
-function nextProva(){if(provaIndex<provas.length-1){provaIndex++;renderProva();}}
-function prevProva(){if(provaIndex>0){provaIndex--;renderProva();}}
+function concluir(culpado) {
+  esconderTudo();
+  document.getElementById("resultado").classList.remove("hidden");
 
-function fecharProvas(){
-document.getElementById("provas").style.display="none";
-abrirInterrogatorioExtra();
+  let texto = "";
+
+  if (culpado === "renato") {
+    texto = "As provas indicam que Renato coagiu Elisa. A imagem no celular confirma a ameaça.";
+  } else if (culpado === "marina") {
+    texto = "Marina omitiu informações importantes, mas não foi a responsável direta.";
+  } else {
+    texto = "Lucas tinha motivos emocionais, mas não há provas suficientes.";
+  }
+
+  document.getElementById("textoResultado").innerText = texto;
 }
 
-// INTERROGATÓRIO EXTRA
-function abrirInterrogatorioExtra(){
-document.getElementById("interrogatorio").style.display="block";
-renderExtra();
-}
-
-function renderExtra(){
-const q=interrogatorioExtra[extraIndex];
-document.getElementById("interrogatorioBox").innerHTML=`
-<h3>Interrogatório</h3>
-<p>${q.q}</p>
-<button class="btn btn-option" onclick="extraResposta(true)">Responder</button>`;
-}
-
-function extraResposta(){
-pontos++;
-extraIndex++;
-extraIndex<interrogatorioExtra.length?renderExtra():renderPergunta();
-}
-
-// INTERROGATÓRIO FINAL
-function renderPergunta(){
-const p=perguntas[perguntaIndex];
-let html=`<h3>Interrogatório Final</h3><p>${p.q}</p>`;
-p.op.forEach(o=>{
-html+=`<button class="btn btn-option" onclick="responder(${o.c})">${o.t}</button>`;
-});
-document.getElementById("interrogatorioBox").innerHTML=html;
-}
-
-function responder(c){
-if(c)pontos++;
-perguntaIndex++;
-perguntaIndex<perguntas.length?renderPergunta():finalizar();
-}
-
-// FINAL
-function finalizar(){
-let texto=pontos>=6
-?"✅ CASO SOLUCIONADO<br>O colega de trabalho é o culpado. Elisa foi silenciada."
-:"❌ CASO INCONCLUSIVO<br>Faltaram decisões corretas.";
-
-document.getElementById("interrogatorioBox").innerHTML=`
-<h3>Conclusão</h3>
-<p>${texto}</p>
-<button class="btn btn-primary" onclick="location.reload()">Reiniciar</button>`;
+function esconderTudo() {
+  document.querySelectorAll("section").forEach(sec => sec.classList.add("hidden"));
 }
 </script>
 
 </body>
-</html>
+  </html>
