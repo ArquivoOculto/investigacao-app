@@ -51,7 +51,11 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 </div>
 
 <script>
+/* HISTÓRIA EXPANDIDA — ACRESCENTADA */
 const historia=[
+{texto:"Elisa era uma jovem reservada, mas nos últimos dias parecia assustada.",img:null},
+{texto:"Ela comentou com colegas que havia descoberto algo grave.",img:null},
+{texto:"Na noite do desaparecimento, uma ligação misteriosa foi registrada.",img:null},
 {texto:"Elisa desapareceu numa noite fria e silenciosa.",img:"https://i.ibb.co/3c2d8nY/cena-crime.jpg"},
 {texto:"O quarto da vítima estava revirado, mas sem sinais de arrombamento.",img:"https://i.ibb.co/ZV0wWqN/quarto-vitima.jpg"},
 {texto:"O celular de Elisa foi encontrado escondido atrás do guarda-roupa.",img:"https://i.ibb.co/D9FzR5S/celular-vitima.jpg"},
@@ -59,7 +63,6 @@ const historia=[
 {texto:"Você precisa analisar as provas antes de interrogar.",img:null}
 ];
 
-// ACRESCENTADO
 let provasColetadas=0;
 
 const dossieData=[
@@ -72,7 +75,7 @@ const dossieData=[
 let dIndex=0;
 
 function startGame(){
-document.getElementById("home").style.display="none"; // ACRESCENTADO
+document.getElementById("home").style.display="none";
 mostrarHistoria(0);
 }
 
@@ -110,7 +113,6 @@ document.getElementById("dossieBox").innerHTML=`
 `;
 }
 
-// ACRESCENTADO
 function coletarProva(){
 provasColetadas++;
 alert("Prova analisada");
@@ -126,7 +128,6 @@ abrirDossie();
 }
 }
 
-// ACRESCENTADO – INTERROGATÓRIO INTERATIVO
 function interrogatorio(){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
@@ -141,23 +142,29 @@ box.innerHTML=`
 app.appendChild(box);
 }
 
-// FINAL BASEADO EM PROVAS
+/* FINAL + BOTÃO DE VOLTAR — ACRESCENTADO */
 function final(acertou){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
 box.innerHTML=acertou?`
 <h2>🚔 Caso Resolvido</h2>
-<p>As provas do celular e do trabalho levaram à prisão do colega.</p>
-<p>Elisa descobriu um esquema ilegal e foi silenciada.</p>
+<p>As provas levaram à prisão do colega de trabalho.</p>
+<p>Após o interrogatório, ele confessou o crime.</p>
 <p><strong>Justiça foi feita.</strong></p>
+<button class="btn btn-primary" onclick="voltarInicio()">🏠 Voltar à Tela Inicial</button>
 `:
 `
 <h2>❌ Conclusão Incorreta</h2>
-<p>As provas não sustentam essa acusação.</p>
-<p>O verdadeiro culpado escapou.</p>
+<p>O culpado escapou.</p>
+<button class="btn btn-primary" onclick="voltarInicio()">🏠 Voltar à Tela Inicial</button>
 `;
 app.appendChild(box);
+}
+
+/* FUNÇÃO NOVA — ACRESCENTADA */
+function voltarInicio(){
+location.reload();
 }
 </script>
 
