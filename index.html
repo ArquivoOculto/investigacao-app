@@ -25,6 +25,11 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 .game-box{padding:20px;border-top:2px solid #38bdf8;animation:fadeIn .4s ease;text-align:center}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 #btnInstall{display:none;margin-top:15px}
+
+/* DOSSIÊ */
+.dossie{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:20;display:none;overflow:auto}
+.dossie-box{max-width:400px;margin:40px auto;background:#020617;border-radius:16px;padding:20px}
+.dossie h3{color:#38bdf8}
 </style>
 </head>
 
@@ -38,76 +43,107 @@ body{margin:0;background:radial-gradient(circle at top,#020617,#000);color:#e5e7
 <h2>Caso 01 — O Desaparecimento de Elisa</h2>
 <p>Cada escolha pode revelar… ou esconder a verdade.</p>
 <button class="btn btn-primary" onclick="startGame()">Iniciar Investigação</button>
+<button class="btn btn-option" onclick="abrirDossie()">📂 Abrir Dossiê</button>
 <button id="btnInstall" class="btn btn-option">📥 Instalar Aplicativo</button>
 </div>
+</div>
+
+<!-- DOSSIÊ -->
+<div class="dossie" id="dossie">
+  <div class="dossie-box" id="dossieBox"></div>
 </div>
 
 <script>
 const historia=[
 "Elisa desapareceu numa noite fria e silenciosa.",
-"Seu celular foi encontrado desligado em seu quarto.",
-"Mensagens recentes indicam que ela estava com medo.",
-"Cinco pessoas próximas se tornam suspeitas.",
-"Você precisa interrogar todos com cuidado."
+"Ela parecia nervosa nos últimos dias.",
+"O celular encontrado escondia conversas comprometedoras.",
+"Cinco pessoas próximas tinham motivos para mentir.",
+"Você deve entender a história entre cada um deles e a vítima."
 ];
 
 let step=0;
 let correctAnswers=0;
 
 const game=[
-{q:"Por onde você começa a investigação?",
-options:[
-{t:"Analisar o quarto",c:true,r:"Há sinais de luta."},
-{t:"Ignorar o quarto",c:false,r:"Uma pista foi perdida."}
+{q:"Por onde você começa a investigação?",options:[
+{t:"Analisar o quarto",c:true,r:"O quarto mostra sinais de luta."},
+{t:"Ignorar o quarto",c:false,r:"Uma pista importante foi perdida."}
 ]},
-{q:"O celular revela:",
-options:[
-{t:"Mensagens ameaçadoras",c:true,r:"Vêm de alguém próximo."},
-{t:"Nada importante",c:false,r:"Você ignora provas."}
+{q:"O celular revela:",options:[
+{t:"Mensagens ameaçadoras",c:true,r:"Conflitos com pessoas próximas."},
+{t:"Nada importante",c:false,r:"Provas ignoradas."}
 ]},
-
-/* SUSPEITO 1 */
-{q:"Interrogatório — Melhor amiga",
-options:[
-{t:"Confrontar contradições",c:true,r:"Ela entra em pânico."},
-{t:"Acreditar na versão",c:false,r:"Ela esconde algo."}
+{q:"Interrogatório — Melhor amiga",options:[
+{t:"Confrontar contradições",c:true,r:"Discussões por inveja e traição."},
+{t:"Acreditar na versão",c:false,r:"Ela esconde algo grave."}
 ]},
-
-/* SUSPEITO 2 */
-{q:"Interrogatório — Ex-namorado",
-options:[
-{t:"Questionar o álibi",c:true,r:"O álibi é falso."},
-{t:"Encerrar rápido",c:false,r:"Ele se livra fácil."}
+{q:"Interrogatório — Ex-namorado",options:[
+{t:"Questionar o álibi",c:true,r:"Histórico de controle e ameaças."},
+{t:"Encerrar rápido",c:false,r:"Você ignora o passado violento."}
 ]},
-
-/* SUSPEITO 3 */
-{q:"Interrogatório — Colega de trabalho",
-options:[
-{t:"Perguntar sobre ameaças",c:true,r:"Ele confirma brigas recentes."},
-{t:"Ignorar histórico",c:false,r:"Você perde contexto."}
+{q:"Interrogatório — Colega de trabalho",options:[
+{t:"Perguntar sobre ameaças",c:true,r:"Esquema ilegal descoberto por Elisa."},
+{t:"Ignorar histórico",c:false,r:"Motivo financeiro ignorado."}
 ]},
-
-/* SUSPEITO 4 */
-{q:"Interrogatório — Vizinho",
-options:[
-{t:"Mostrar imagens de câmeras",c:true,r:"Ele mente sobre horários."},
-{t:"Aceitar explicação",c:false,r:"Uma mentira passa."}
+{q:"Interrogatório — Vizinho",options:[
+{t:"Mostrar câmeras",c:true,r:"Briga ouvida na noite do sumiço."},
+{t:"Aceitar versão",c:false,r:"Mentira passa despercebida."}
 ]},
-
-/* SUSPEITO 5 */
-{q:"Interrogatório — Irmão",
-options:[
-{t:"Confrontar ligações apagadas",c:true,r:"Ele confirma discussão."},
-{t:"Não pressionar",c:false,r:"Ele omite algo."}
+{q:"Interrogatório — Irmão",options:[
+{t:"Confrontar ligações",c:true,r:"Conflito por herança."},
+{t:"Não pressionar",c:false,r:"Segredos familiares ocultos."}
 ]},
-
-/* FINAL */
-{q:"Conclusão final",
-options:[
-{t:"Acusar a melhor amiga",c:true,r:"🔴 CULPADA: Planejou o crime por inveja."},
-{t:"Acusar outro suspeito",c:false,r:"❌ O verdadeiro culpado escapa."}
+{q:"Conclusão final",options:[
+{t:"Acusar a melhor amiga",c:true,r:"🔴 CULPADA: Planejou tudo."},
+{t:"Acusar outro",c:false,r:"❌ O culpado escapa."}
 ]}
 ];
+
+/* DOSSIÊ */
+const dossieData=[
+{
+nome:"Melhor Amiga",
+texto:"Cresceu com Elisa. Nos últimos meses demonstrava inveja da vida pessoal e profissional da vítima. Temia ser denunciada."
+},
+{
+nome:"Ex-namorado",
+texto:"Relacionamento abusivo. Não aceitava o término. Elisa tinha medo dele."
+},
+{
+nome:"Colega de Trabalho",
+texto:"Elisa descobriu um esquema ilegal que poderia levá-lo à prisão."
+},
+{
+nome:"Vizinho",
+texto:"Observava a rotina de Elisa. Ouvia discussões frequentes."
+},
+{
+nome:"Irmão",
+texto:"Disputa por herança. Relação estremecida nos últimos meses."
+}
+];
+
+let dIndex=0;
+
+function abrirDossie(){
+dIndex=0;
+document.getElementById("dossie").style.display="block";
+renderDossie();
+}
+function fecharDossie(){
+document.getElementById("dossie").style.display="none";
+}
+function renderDossie(){
+const d=dossieData[dIndex];
+document.getElementById("dossieBox").innerHTML=`
+<h3>${d.nome}</h3>
+<p>${d.texto}</p>
+<button class="btn btn-option" onclick="dIndex>0&&dIndex--;renderDossie()">⬅ Anterior</button>
+<button class="btn btn-option" onclick="dIndex<dossieData.length-1&&dIndex++;renderDossie()">Próximo ➡</button>
+<button class="btn btn-primary" onclick="fecharDossie()">Fechar</button>
+`;
+}
 
 function startGame(){step=0;correctAnswers=0;mostrarHistoria(0)}
 function mostrarHistoria(i){
@@ -118,7 +154,6 @@ box.innerHTML=`<p>${historia[i]}</p><button class="btn btn-primary">${i<historia
 app.appendChild(box);
 box.querySelector("button").onclick=()=>{box.remove();i<historia.length-1?mostrarHistoria(i+1):showStep()}
 }
-
 function showStep(){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
@@ -129,7 +164,6 @@ current.options.forEach((o,i)=>html+=`<button class="btn btn-option" onclick="an
 box.innerHTML=html;
 app.appendChild(box);
 }
-
 function answer(i){
 const current=game[step];
 alert(current.options[i].r);
@@ -138,13 +172,12 @@ document.querySelector(".game-box").remove();
 step++;
 step<game.length?showStep():endGame();
 }
-
 function endGame(){
 const app=document.querySelector(".app");
 const box=document.createElement("div");
 box.className="game-box";
 box.innerHTML=`<h3>Resultado Final</h3>
-<p>${correctAnswers>=7?"🕵️ Caso resolvido. O culpado foi preso.":"❌ Investigação falhou. Provas insuficientes."}</p>
+<p>${correctAnswers>=7?"🕵️ Caso resolvido.":"❌ Investigação falhou."}</p>
 <button class="btn btn-primary" onclick="location.reload()">Jogar novamente</button>`;
 app.appendChild(box);
 }
