@@ -63,7 +63,7 @@ h1, h2, h3 { color: #ff3b3b; }
 <section id="capa" class="container">
 <h1>INVESTIGAÇÃO</h1>
 <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
-<p>Um desaparecimento. Muitas mentiras. Uma verdade escondida.</p>
+<p>Um desaparecimento. Mentiras entre amigos, segredos sombrios e uma verdade que ninguém quer revelar.</p>
 <button onclick="mostrarIntro()">Iniciar Investigação</button>
 <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
 
@@ -79,7 +79,7 @@ h1, h2, h3 { color: #ff3b3b; }
 <section id="intro" class="container hidden">
 <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
 <p>
-Elisa desapareceu após enviar mensagens desesperadas. Amigos próximos mentiram e provas indicaram coação. O investigador precisa ligar os fatos antes que o culpado escape.
+Elisa enviou mensagens enigmáticas para amigos e familiares antes de desaparecer. O investigador percebe que cada palavra, cada detalhe, pode ser uma pista crucial. Segredos antigos e pressões desconhecidas começam a surgir à medida que o caso se aprofunda.
 </p>
 <button onclick="mostrarDossie()">Acessar Dossiê</button>
 </section>
@@ -90,11 +90,12 @@ Elisa desapareceu após enviar mensagens desesperadas. Amigos próximos mentiram
 <p><strong>Vítima:</strong> Elisa Martins</p>
 <p><strong>Status:</strong> Desaparecida</p>
 <p>
-Elisa descobriu um esquema ilegal envolvendo seu chefe. Ela foi ameaçada para se manter em silêncio.
+Elisa descobriu um esquema ilegal envolvendo seu chefe e estava reunindo provas. Mensagens apagadas, ligações suspeitas e imagens escondidas indicam que alguém tentou coagi-la. Ela deixou pequenas pistas que podem ser interpretadas de forma diferente — cada detalhe importa.
 </p>
 
 <h3>Imagem encontrada no celular</h3>
 <img src="https://i.ibb.co/hFQwkyt0/IMG-20260116-WA0028.jpg">
+<p><em>Dica:</em> Observe o fundo da foto, pode revelar quem estava presente.</p>
 
 <button onclick="mostrarInterrogatorio()">Iniciar Interrogatório</button>
 </section>
@@ -102,19 +103,19 @@ Elisa descobriu um esquema ilegal envolvendo seu chefe. Ela foi ameaçada para s
 <!-- INTERROGATÓRIO CASO 01 -->
 <section id="interrogatorio" class="container hidden">
 <h2>Interrogatório — Caso 01</h2>
-<p>Cada pergunta revela contradições. O culpado tenta se proteger.</p>
+<p>Cada pergunta revela contradições. Alguns mentem, outros omitem informações. É preciso atenção aos detalhes e pistas escondidas.</p>
 
 <h3>Lucas</h3>
-<div class="option" onclick="resposta('lucas')">Onde você estava?</div>
-<div class="option" onclick="resposta('lucas')">Por que Elisa tinha medo?</div>
+<div class="option" onclick="resposta('lucas')">Onde você estava na noite do desaparecimento?</div>
+<div class="option" onclick="resposta('lucas')">Por que Elisa parecia desconfiada de você?</div>
 
 <h3>Marina</h3>
-<div class="option" onclick="resposta('marina')">Por que mentiu?</div>
-<div class="option" onclick="resposta('marina')">O que sabe da imagem?</div>
+<div class="option" onclick="resposta('marina')">Você mentiu sobre a reunião com Elisa?</div>
+<div class="option" onclick="resposta('marina')">O que sabia sobre o esquema do chefe dela?</div>
 
 <h3>Renato</h3>
-<div class="option" onclick="resposta('renato')">Você a pressionava?</div>
-<div class="option" onclick="resposta('renato')">Por que seu número aparece?</div>
+<div class="option" onclick="resposta('renato')">Você a pressionava para manter segredo?</div>
+<div class="option" onclick="resposta('renato')">Por que seu número aparece em mensagens apagadas?</div>
 </section>
 
 <!-- RESULTADO CASO 01 -->
@@ -132,7 +133,7 @@ Elisa descobriu um esquema ilegal envolvendo seu chefe. Ela foi ameaçada para s
 <section id="caso2" class="container hidden">
 <h2>Caso 02 — O Silêncio da Testemunha</h2>
 <p>
-Uma testemunha ia revelar um esquema. Antes do depoimento, ela foi encontrada morta. Alguém poderoso tentou apagar a verdade.
+Uma testemunha-chave que poderia revelar um esquema poderoso desapareceu misteriosamente. Mensagens de alerta foram enviadas, mas ninguém conseguiu impedir que segredos perigosos fossem mantidos. O investigador deve juntar cada fragmento de informação antes que evidências vitais desapareçam.
 </p>
 <button onclick="interrogatorioCaso2()">Iniciar Investigação</button>
 </section>
@@ -141,16 +142,16 @@ Uma testemunha ia revelar um esquema. Antes do depoimento, ela foi encontrada mo
 <h2>Interrogatório — Caso 02</h2>
 
 <h3>Paulo (vizinho)</h3>
-<div class="option" onclick="resposta2('paulo')">Você ouviu algo?</div>
-<div class="option" onclick="resposta2('paulo')">Por que ligou anonimamente?</div>
+<div class="option" onclick="resposta2('paulo')">Você ouviu algo estranho na noite do desaparecimento?</div>
+<div class="option" onclick="resposta2('paulo')">Por que ligou anonimamente para alertar a vítima?</div>
 
 <h3>Clara (jornalista)</h3>
-<div class="option" onclick="resposta2('clara')">O que a vítima ia revelar?</div>
-<div class="option" onclick="resposta2('clara')">Quem tentou impedir a matéria?</div>
+<div class="option" onclick="resposta2('clara')">O que a vítima ia revelar em sua matéria?</div>
+<div class="option" onclick="resposta2('clara')">Quem tentou impedir a publicação das provas?</div>
 
 <h3>Henrique (advogado)</h3>
-<div class="option" onclick="resposta2('henrique')">Você representava quem?</div>
-<div class="option" onclick="resposta2('henrique')">Por que destruiu documentos?</div>
+<div class="option" onclick="resposta2('henrique')">Você representava algum cliente suspeito?</div>
+<div class="option" onclick="resposta2('henrique')">Por que documentos importantes desapareceram misteriosamente?</div>
 </section>
 
 <section id="resultado2" class="container hidden">
