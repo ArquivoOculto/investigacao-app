@@ -19,7 +19,7 @@ body {
 
 .hidden { display: none; }
 
-button {
+button, #btnInstall {
   padding: 12px 20px;
   background: #b30000;
   color: #fff;
@@ -27,9 +27,10 @@ button {
   border-radius: 6px;
   cursor: pointer;
   margin-top: 10px;
+  display: inline-block;
 }
 
-button:hover {
+button:hover, #btnInstall:hover {
   background: #ff0000;
 }
 
@@ -68,9 +69,15 @@ h1, h2, h3 {
 <!-- CAPA -->
 <section id="capa" class="container">
   <h1>INVESTIGAÇÃO</h1>
+
   <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
+
   <p>Um desaparecimento. Muitas mentiras. Uma verdade escondida.</p>
+
   <button onclick="mostrarIntro()">Iniciar Investigação</button>
+
+  <!-- BOTÃO INSTALAR APP -->
+  <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
 </section>
 
 <!-- INTRO -->
@@ -93,16 +100,13 @@ h1, h2, h3 {
 
   <h3>Provas encontradas</h3>
   <ul>
-    <li><strong>Celular:</strong> Contém mensagens apagadas e uma imagem comprometedora.</li>
-    <li><strong>Testemunhas:</strong> Três suspeitos com versões diferentes.</li>
-    <li><strong>Imagem no celular:</strong> Indício de coação.</li>
+    <li><strong>Celular:</strong> Mensagens apagadas.</li>
+    <li><strong>Imagem:</strong> Indício de coação.</li>
+    <li><strong>Suspeitos:</strong> Três pessoas próximas.</li>
   </ul>
 
   <h3>Imagem encontrada no celular de Elisa</h3>
-  <p>
-    Esta imagem foi enviada minutos antes do desaparecimento.
-    Ela indica que Elisa estava sendo coagida.
-  </p>
+  <p>Mostra que ela estava sendo coagida momentos antes de sumir.</p>
 
   <img src="https://i.ibb.co/hFQwkyt0/IMG-20260116-WA0028.jpg">
 
@@ -112,34 +116,30 @@ h1, h2, h3 {
 <!-- INTERROGATÓRIO -->
 <section id="interrogatorio" class="container hidden">
   <h2>Interrogatório</h2>
-  <p>Escolha com atenção. Cada resposta influencia o resultado.</p>
+  <p>Escolha bem. Cada resposta influencia o desfecho.</p>
 
-  <h3>Suspeito 1: Lucas (ex-namorado)</h3>
-  <div class="option" onclick="resposta('lucas',1)">Onde você estava na noite do desaparecimento?</div>
-  <div class="option" onclick="resposta('lucas',2)">Por que Elisa parecia com medo de você?</div>
+  <h3>Lucas (ex-namorado)</h3>
+  <div class="option" onclick="resposta('lucas')">Onde você estava na noite do sumiço?</div>
+  <div class="option" onclick="resposta('lucas')">Por que Elisa tinha medo?</div>
 
-  <h3>Suspeito 2: Marina (melhor amiga)</h3>
-  <div class="option" onclick="resposta('marina',1)">Por que você mentiu sobre a última ligação?</div>
-  <div class="option" onclick="resposta('marina',2)">Qual sua relação com a imagem encontrada?</div>
+  <h3>Marina (melhor amiga)</h3>
+  <div class="option" onclick="resposta('marina')">Por que mentiu sobre a ligação?</div>
+  <div class="option" onclick="resposta('marina')">Qual sua relação com a imagem?</div>
 
-  <h3>Suspeito 3: Renato (chefe)</h3>
-  <div class="option" onclick="resposta('renato',1)">Você pressionou Elisa no trabalho?</div>
-  <div class="option" onclick="resposta('renato',2)">Por que seu número aparece nas mensagens apagadas?</div>
+  <h3>Renato (chefe)</h3>
+  <div class="option" onclick="resposta('renato')">Você a pressionava no trabalho?</div>
+  <div class="option" onclick="resposta('renato')">Por que seu número aparece nas mensagens?</div>
 </section>
 
 <!-- RESULTADO -->
 <section id="resultado" class="container hidden">
-  <h2>Conclusão da Investigação</h2>
+  <h2>Conclusão</h2>
   <p id="textoResultado"></p>
-  <button onclick="location.reload()">Reiniciar Jogo</button>
+  <button onclick="location.reload()">Jogar Novamente</button>
 </section>
 
 <script>
-let pistas = {
-  lucas: 0,
-  marina: 0,
-  renato: 0
-};
+let pistas = { lucas: 0, marina: 0, renato: 0 };
 
 function mostrarIntro() {
   esconderTudo();
@@ -156,37 +156,46 @@ function mostrarInterrogatorio() {
   document.getElementById("interrogatorio").classList.remove("hidden");
 }
 
-function resposta(suspeito, tipo) {
-  pistas[suspeito]++;
-
-  if (pistas[suspeito] >= 2) {
-    concluir(suspeito);
-  } else {
-    alert("Resposta registrada. Continue investigando.");
-  }
+function resposta(nome) {
+  pistas[nome]++;
+  if (pistas[nome] >= 2) concluir(nome);
+  else alert("Resposta registrada. Continue investigando.");
 }
 
 function concluir(culpado) {
   esconderTudo();
   document.getElementById("resultado").classList.remove("hidden");
 
-  let texto = "";
+  let texto = {
+    renato: "Renato coagiu Elisa. A imagem confirma a ameaça.",
+    marina: "Marina ocultou informações, mas não foi a autora.",
+    lucas: "Lucas tinha motivos emocionais, porém sem provas."
+  };
 
-  if (culpado === "renato") {
-    texto = "As provas indicam que Renato coagiu Elisa. A imagem no celular confirma a ameaça.";
-  } else if (culpado === "marina") {
-    texto = "Marina omitiu informações importantes, mas não foi a responsável direta.";
-  } else {
-    texto = "Lucas tinha motivos emocionais, mas não há provas suficientes.";
-  }
-
-  document.getElementById("textoResultado").innerText = texto;
+  document.getElementById("textoResultado").innerText = texto[culpado];
 }
 
 function esconderTudo() {
-  document.querySelectorAll("section").forEach(sec => sec.classList.add("hidden"));
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
 }
+
+/* ===== INSTALAÇÃO DO APP (PWA) ===== */
+let deferredPrompt;
+const btnInstall = document.getElementById("btnInstall");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  btnInstall.classList.remove("hidden");
+});
+
+btnInstall.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt = null;
+  btnInstall.classList.add("hidden");
+});
 </script>
 
 </body>
-  </html>
+</html>
