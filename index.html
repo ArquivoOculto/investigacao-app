@@ -8,18 +8,56 @@
 <meta name="theme-color" content="#000000">
 
 <style>
-body { margin:0; font-family:Arial,sans-serif; background:#0e0e0e; color:#fff; }
-.hidden { display:none; }
-button, #btnInstall { padding:12px 20px; background:#b30000; color:#fff; border:none; border-radius:6px; cursor:pointer; margin-top:10px; display:inline-block; }
-button:hover, #btnInstall:hover { background:#ff0000; }
-.container { padding:20px; max-width:800px; margin:auto; }
-img { max-width:100%; border-radius:10px; margin-top:10px; }
-h1,h2,h3 { color:#ff3b3b; }
-.option { background:#1c1c1c; padding:12px; border-radius:6px; margin:10px 0; cursor:pointer; }
-.option:hover { background:#2a2a2a; }
-.dossie-final { background:#111; border:2px solid #b30000; padding:20px; border-radius:10px; margin-top:20px; }
-.mensagem-celular { background:#1c1c1c; border-left:4px solid #ff3b3b; padding:12px; margin:10px 0; border-radius:6px; animation:piscar 1s infinite alternate; }
-@keyframes piscar { 0%{opacity:0.8}100%{opacity:1} }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0e0e0e;
+  color: #fff;
+}
+.hidden { display: none; }
+button, #btnInstall {
+  padding: 12px 20px;
+  background: #b30000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-block;
+}
+button:hover, #btnInstall:hover { background: #ff0000; }
+.container { padding: 20px; max-width: 800px; margin: auto; }
+img { max-width: 100%; border-radius: 10px; margin-top: 10px; }
+h1, h2, h3 { color: #ff3b3b; }
+.option {
+  background: #1c1c1c;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+.option:hover { background: #2a2a2a; }
+.dossie-final {
+  background:#111;
+  border:2px solid #b30000;
+  padding:20px;
+  border-radius:10px;
+  margin-top:20px;
+}
+
+/* Estilo para mensagens de celular */
+.mensagem-celular {
+  background: #1c1c1c;
+  border-left: 4px solid #ff3b3b;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  animation: piscar 1s infinite alternate;
+}
+@keyframes piscar {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
 </style>
 </head>
 <body>
@@ -33,51 +71,55 @@ h1,h2,h3 { color:#ff3b3b; }
   <div id="btnInstall" class="hidden">📥 Instalar Investigação</div>
 </section>
 
-<!-- SELEÇÃO DE CASOS -->
+<!-- TELA DE SELEÇÃO DE CASOS -->
 <section id="telaCasos" class="container hidden">
-  <h2>Escolha o Caso</h2>
+  <h2>Escolha o Caso que deseja investigar</h2>
+  <p>Cada caso contém pistas, interrogatórios e segredos. Escolha com cuidado!</p>
   <div class="option" onclick="iniciarCaso(1)">Capítulo 01 — Caso Elisa Martins</div>
   <div class="option" onclick="iniciarCaso(2)">Capítulo 02 — O Silêncio da Testemunha</div>
   <div class="option" onclick="iniciarCaso(3)">Capítulo 03 — O Mistério do Laboratório</div>
   <div class="option" onclick="iniciarCaso(4)">Capítulo 04 — O Roubo da Galeria</div>
 </section>
 
-<!-- INTRO CASO 1 -->
+<!-- INTRO -->
 <section id="intro" class="container hidden">
   <img src="https://i.ibb.co/RTwVMtJr/file-000000001c64720e8a39d9ce59a7b6a4.png">
-  <p>Elisa enviou mensagens enigmáticas para amigos e familiares antes de desaparecer. Segredos antigos e pressões desconhecidas surgem a cada pista.</p>
+  <p>
+    Elisa enviou mensagens enigmáticas para amigos e familiares antes de desaparecer. Cada palavra, cada detalhe, pode ser uma pista crucial. Segredos antigos e pressões desconhecidas começam a surgir à medida que o caso se aprofunda.  
+    O investigador precisa analisar tudo com atenção para desvendar a verdade.
+  </p>
   <button onclick="mostrarCena1()">Acessar Dossiê</button>
 </section>
 
-<!-- CASO 1 - CENAS -->
+<!-- CASO 01 - CENAS -->
 <section id="cena1" class="container hidden">
-  <h2>Cena 1 — Última Mensagem</h2>
-  <div class="mensagem-celular">"Se algo me acontecer, procure o que está escondido no escritório."</div>
+  <h2>Cena 1 — Última Mensagem de Elisa</h2>
+  <p>Elisa enviou esta mensagem pouco antes de desaparecer:</p>
+  <div class="mensagem-celular" id="msg1">"Se algo me acontecer, procure o que está escondido no escritório."</div>
   <button onclick="mostrarCena2()">Continuar</button>
 </section>
 
 <section id="cena2" class="container hidden">
   <h2>Cena 2 — Local Suspeito</h2>
-  <p>O escritório de Elisa mostra sinais de invasão.</p>
-  <div class="mensagem-celular">"Objetos fora do lugar indicam pressões externas."</div>
+  <p>O investigador encontrou o escritório de Elisa, com sinais de alguém ter mexido nas gavetas recentemente.</p>
+  <div class="mensagem-celular" id="msg2">"Objetos fora do lugar indicam pressões externas."</div>
   <button onclick="mostrarCena3()">Continuar</button>
 </section>
 
 <section id="cena3" class="container hidden">
   <h2>Cena 3 — Descoberta Importante</h2>
+  <p>Entre os papéis, o investigador encontra uma fotografia suspeita:</p>
   <img src="https://i.ibb.co/hFQwkyt0/IMG-20260116-WA0028.jpg" alt="Foto suspeita">
-  <div class="mensagem-celular">"Alguém tentava coagir Elisa. Observe os detalhes do fundo."</div>
-  <button onclick="mostrarCena4()">Continuar</button>
-</section>
-
-<section id="cena4" class="container hidden">
-  <h2>Cena 4 — Diário</h2>
-  <p>O diário revela encontros secretos e possíveis ameaças.</p>
+  <div class="mensagem-celular" id="msg3">"Alguém tentava coagir Elisa. Observe os detalhes do fundo."</div>
   <button onclick="mostrarInterrogatorio1()">Seguir para Interrogatório</button>
 </section>
 
-<!-- INTERROGATÓRIO CASO 1 -->
-<section id="interrogatorio1" class="container hidden"></section>
+<!-- INTERROGATÓRIO AVANÇADO - CASO 01 -->
+<section id="interrogatorio1" class="container hidden">
+  <h2>Interrogatório Avançado — Caso 01</h2>
+  <p>Analise cada testemunha e descubra contradições ou álibis falsos. Escolha perguntas estratégicas!</p>
+  <div id="suspeitos1"></div>
+</section>
 
 <section id="resultado1" class="container hidden">
   <h2>Conclusão — Caso 01</h2>
@@ -86,14 +128,23 @@ h1,h2,h3 { color:#ff3b3b; }
   <button onclick="iniciarCaso(2)">➡ Próximo Caso</button>
 </section>
 
-<!-- CASO 2 -->
+<!-- ================= CASO 02 ================= -->
 <section id="caso2" class="container hidden">
   <h2>Caso 02 — O Silêncio da Testemunha</h2>
-  <p>Uma testemunha desapareceu. Cabe ao investigador juntar fragmentos de informação.</p>
+  <p>
+    Uma testemunha-chave que poderia revelar um esquema poderoso desapareceu misteriosamente.  
+    Mensagens de alerta foram enviadas, mas ninguém conseguiu impedir que segredos perigosos fossem mantidos.  
+    O investigador deve juntar cada fragmento de informação antes que evidências vitais desapareçam.
+  </p>
   <button onclick="mostrarInterrogatorio2()">Iniciar Investigação</button>
 </section>
 
-<section id="interrogatorio2" class="container hidden"></section>
+<section id="interrogatorio2" class="container hidden">
+  <h2>Interrogatório Avançado — Caso 02</h2>
+  <p>Analise cada suspeito cuidadosamente.</p>
+  <div id="suspeitos2"></div>
+</section>
+
 <section id="resultado2" class="container hidden">
   <h2>Conclusão — Caso 02</h2>
   <p id="textoResultado2"></p>
@@ -101,14 +152,22 @@ h1,h2,h3 { color:#ff3b3b; }
   <button onclick="iniciarCaso(3)">➡ Próximo Caso</button>
 </section>
 
-<!-- CASO 3 -->
+<!-- ================= CASO 03 ================= -->
 <section id="caso3" class="container hidden">
   <h2>Caso 03 — O Mistério do Laboratório</h2>
-  <p>Experimentos desaparecem e documentos confidenciais somem. O investigador deve descobrir os culpados.</p>
+  <p>
+    No laboratório da cidade, experimentos desaparecem misteriosamente. Uma cientista é encontrada trancada em seu escritório, e documentos confidenciais sumiram.  
+    O investigador deve descobrir quem está por trás dos roubos e impedir que segredos perigosos sejam expostos.
+  </p>
   <button onclick="mostrarInterrogatorio3()">Iniciar Investigação</button>
 </section>
 
-<section id="interrogatorio3" class="container hidden"></section>
+<section id="interrogatorio3" class="container hidden">
+  <h2>Interrogatório Avançado — Caso 03</h2>
+  <p>Analise cada suspeito cuidadosamente.</p>
+  <div id="suspeitos3"></div>
+</section>
+
 <section id="resultado3" class="container hidden">
   <h2>Conclusão — Caso 03</h2>
   <p id="textoResultado3"></p>
@@ -116,14 +175,22 @@ h1,h2,h3 { color:#ff3b3b; }
   <button onclick="iniciarCaso(4)">➡ Próximo Caso</button>
 </section>
 
-<!-- CASO 4 -->
+<!-- ================= CASO 04 ================= -->
 <section id="caso4" class="container hidden">
   <h2>Caso 04 — O Roubo da Galeria</h2>
-  <p>Obras raras desapareceram e pistas devem ser analisadas.</p>
+  <p>
+    Uma famosa galeria de arte foi invadida e obras raras desapareceram.  
+    O investigador precisa analisar câmeras, entrevistas com funcionários e pistas deixadas pelos ladrões para descobrir o culpado.
+  </p>
   <button onclick="mostrarInterrogatorio4()">Iniciar Investigação</button>
 </section>
 
-<section id="interrogatorio4" class="container hidden"></section>
+<section id="interrogatorio4" class="container hidden">
+  <h2>Interrogatório Avançado — Caso 04</h2>
+  <p>Analise cada suspeito cuidadosamente.</p>
+  <div id="suspeitos4"></div>
+</section>
+
 <section id="resultado4" class="container hidden">
   <h2>Conclusão — Caso 04</h2>
   <p id="textoResultado4"></p>
@@ -132,9 +199,55 @@ h1,h2,h3 { color:#ff3b3b; }
 </section>
 
 <script>
-let pistas={1:{},2:{},3:{},4:{}};
+// Função para criar suspeitos dinamicamente
+function criarSuspeitos(idContainer, casoNum, suspeitos){
+  let container = document.getElementById(idContainer);
+  suspeitos.forEach(s => {
+    let h3 = document.createElement('h3');
+    h3.innerText = `${s.nome} (${s.relaçao})`;
+    let p = document.createElement('p');
+    p.innerText = `Álibi: ${s.alibi}`;
+    container.appendChild(h3);
+    container.appendChild(p);
+    s.perguntas.forEach(pergunta => {
+      let div = document.createElement('div');
+      div.className='option';
+      div.innerText=pergunta;
+      div.onclick = ()=>{
+        alert(`${s.nome} responde: "${s.resposta}"`);
+        responderSuspeito(casoNum, s.nome);
+      };
+      container.appendChild(div);
+    });
+  });
+}
 
+// Armazenar pistas por caso
+let pistas = { 1:{}, 2:{}, 3:{}, 4:{} };
+
+// Responder suspeito
+function responderSuspeito(casoNum, nome){
+  if(!pistas[casoNum][nome]) pistas[casoNum][nome]=0;
+  pistas[casoNum][nome]++;
+  playNotif();
+  if(pistas[casoNum][nome]>=2){
+    esconderTudo();
+    document.getElementById(`resultado${casoNum}`).classList.remove('hidden');
+    document.getElementById(`textoResultado${casoNum}`).innerText = `${nome} foi desmascarado no interrogatório!`;
+    document.getElementById(`dossieCulpado${casoNum}`).innerHTML = `
+      <h3>🚔 Culpado Preso</h3>
+      <p><strong>Nome:</strong> ${nome}</p>
+      <p><strong>Crime:</strong> Descrição detalhada do crime no caso ${casoNum}</p>
+      <p>O suspeito foi preso e encaminhado às autoridades. Todas as evidências foram documentadas.</p>
+      <img src="https://i.ibb.co/2Z8b2Fh/renato-prisao.png" alt="${nome} preso" style="width:100%;border-radius:10px;margin-top:10px;">
+    `;
+  }
+}
+
+// ESCONDER TODAS AS TELAS
 function esconderTudo(){ document.querySelectorAll('section').forEach(s=>s.classList.add('hidden')); }
+
+// MOSTRAR TELAS
 function mostrarTelaCasos(){ esconderTudo(); telaCasos.classList.remove('hidden'); }
 function iniciarCaso(num){
   esconderTudo();
@@ -144,86 +257,49 @@ function iniciarCaso(num){
   if(num===4) caso4.classList.remove('hidden');
 }
 
-function playNotif(){ new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play(); }
-
+// Cenas e interrogatórios
 function mostrarCena1(){ esconderTudo(); cena1.classList.remove('hidden'); playNotif(); }
 function mostrarCena2(){ esconderTudo(); cena2.classList.remove('hidden'); playNotif(); }
 function mostrarCena3(){ esconderTudo(); cena3.classList.remove('hidden'); playNotif(); }
-function mostrarCena4(){ esconderTudo(); cena4.classList.remove('hidden'); playNotif(); }
+function mostrarInterrogatorio1(){ esconderTudo(); interrogatorio1.classList.remove('hidden'); }
+function mostrarInterrogatorio2(){ esconderTudo(); interrogatorio2.classList.remove('hidden'); }
+function mostrarInterrogatorio3(){ esconderTudo(); interrogatorio3.classList.remove('hidden'); }
+function mostrarInterrogatorio4(){ esconderTudo(); interrogatorio4.classList.remove('hidden'); }
 
-function mostrarInterrogatorio1(){ esconderTudo(); criarInterrogatorio(1, caso1); }
-function mostrarInterrogatorio2(){ esconderTudo(); criarInterrogatorio(2, caso2); }
-function mostrarInterrogatorio3(){ esconderTudo(); criarInterrogatorio(3, caso3); }
-function mostrarInterrogatorio4(){ esconderTudo(); criarInterrogatorio(4, caso4); }
+// EFEITO SONORO
+function playNotif(){ const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg'); audio.play(); }
 
-// ======== SUSPEITOS ========
+// ======== Criar suspeitos por caso ========
 const caso1 = [
-  {nome:'Lucas', relacao:'Amigo de Elisa', alibi:'Estava no trabalho', respostas:['Eu estava no escritório o dia inteiro.','Não vi ninguém estranho naquela noite.']},
-  {nome:'Marina', relacao:'Colega', alibi:'Em reunião fora', respostas:['Não notei nada de suspeito.','Alguém me pediu para esconder documentos? Não.']},
-  {nome:'Renato', relacao:'Ex-namorado', alibi:'Em casa sozinho', respostas:['Não entrei no escritório de Elisa.','Evitei Elisa por motivos pessoais.']},
-  {nome:'Clara', relacao:'Amiga de escola', alibi:'Em casa estudando', respostas:['Não sabia dos problemas de Elisa.','Ninguém tentou me pressionar.']},
-  {nome:'Henrique', relacao:'Vizinho', alibi:'Viajando', respostas:['Não vi ninguém suspeito.','Ninguém me pediu ajuda.']},
-  {nome:'Paulo', relacao:'Colega de faculdade', alibi:'Aula online', respostas:['Não notei comportamento estranho.','Não tentei me aproximar dela.']}
+  {nome:'Lucas', relaçao:'Amigo de Elisa', alibi:'Estava no trabalho durante o desaparecimento.', perguntas:['Você viu alguém suspeito na casa de Elisa?','O que fazia na noite do desaparecimento?'], resposta:'Não, eu estava no trabalho e não percebi nada.'},
+  {nome:'Marina', relaçao:'Colega de trabalho', alibi:'Estava em reunião fora da cidade.', perguntas:['Notou algo estranho na Elisa nos últimos dias?','Alguém te pediu para esconder algo?'], resposta:'Ela estava estranha, mas ninguém me pediu nada.'},
+  {nome:'Renato', relaçao:'Ex-namorado', alibi:'Alega ter estado sozinho em casa.', perguntas:['Você entrou no escritório de Elisa recentemente?','Por que estava evitando Elisa?'], resposta:'Não entrei, e precisava de espaço.'},
+  {nome:'Clara', relaçao:'Amiga de escola', alibi:'Estava em casa estudando.', perguntas:['Você sabia sobre os problemas de Elisa?','Alguém tentou te pressionar a mentir?'], resposta:'Não, não estava envolvida.'},
+  {nome:'Henrique', relaçao:'Vizinho', alibi:'Estava viajando.', perguntas:['Você viu alguém estranho perto da casa de Elisa?','Alguém pediu sua ajuda para se esconder?'], resposta:'Não, estava fora da cidade.'},
+  {nome:'Paulo', relaçao:'Colega de faculdade', alibi:'Estava em aula online.', perguntas:['Você notou comportamentos estranhos de Elisa?','Alguém tentou se aproximar dela de forma suspeita?'], resposta:'Não reparei em nada suspeito.'}
 ];
 
 const caso2 = JSON.parse(JSON.stringify(caso1));
 const caso3 = JSON.parse(JSON.stringify(caso1));
 const caso4 = JSON.parse(JSON.stringify(caso1));
 
-function criarInterrogatorio(casoNum,suspeitos){
-  const container=document.getElementById(`interrogatorio${casoNum}`);
-  container.classList.remove('hidden');
-  container.innerHTML=`<h2>Interrogatório — Caso ${casoNum}</h2><p>Escolha perguntas para cada suspeito:</p>`;
-  suspeitos.forEach((s,index)=>{
-    let h3=document.createElement('h3'); h3.innerText=`${s.nome} (${s.relacao})`; container.appendChild(h3);
-    let p=document.createElement('p'); p.innerText=`Álibi: ${s.alibi}`; container.appendChild(p);
-    s.respostas.forEach((resposta,i)=>{
-      let btn=document.createElement('div');
-      btn.className='option';
-      btn.innerText=`Pergunta ${i+1}`;
-      btn.onclick=()=>{
-        pistas[casoNum][s.nome]=(pistas[casoNum][s.nome]||0)+1;
-        playNotif();
-        alert(`${s.nome} responde: "${resposta}"`);
-        if(pistas[casoNum][s.nome]>=2) mostrarEscolhaPrisao(casoNum);
-      };
-      container.appendChild(btn);
-    });
-  });
-}
-
-function mostrarEscolhaPrisao(casoNum){
-  esconderTudo();
-  const container=document.getElementById(`interrogatorio${casoNum}`);
-  container.classList.remove('hidden');
-  container.innerHTML=`<h2>Escolha quem será preso — Caso ${casoNum}</h2>`;
-  Object.keys(pistas[casoNum]).forEach(nome=>{
-    let btn=document.createElement('div');
-    btn.className='option';
-    btn.innerText=`Prender ${nome}`;
-    btn.onclick=()=>{
-      esconderTudo();
-      document.getElementById(`resultado${casoNum}`).classList.remove('hidden');
-      document.getElementById(`textoResultado${casoNum}`).innerText=`${nome} foi preso com base nas evidências!`;
-      document.getElementById(`dossieCulpado${casoNum}`).innerHTML=`
-        <h3>🚔 Culpado Preso</h3>
-        <p><strong>Nome:</strong> ${nome}</p>
-        <p><strong>Crime:</strong> Descrição detalhada do crime no caso ${casoNum}</p>
-        <p>O suspeito foi preso e encaminhado às autoridades.</p>
-        <img src="https://i.ibb.co/2Z8b2Fh/renato-prisao.png" style="width:100%;border-radius:10px;margin-top:10px;">
-      `;
-    };
-    container.appendChild(btn);
-  });
-}
+criarSuspeitos('suspeitos1',1,caso1);
+criarSuspeitos('suspeitos2',2,caso2);
+criarSuspeitos('suspeitos3',3,caso3);
+criarSuspeitos('suspeitos4',4,caso4);
 
 /* PWA */
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt",(e)=>{
-  e.preventDefault(); deferredPrompt=e; btnInstall.classList.remove("hidden");
+  e.preventDefault();
+  deferredPrompt=e;
+  btnInstall.classList.remove("hidden");
 });
-btnInstall.onclick=()=>{ deferredPrompt.prompt(); deferredPrompt=null; btnInstall.classList.add("hidden"); };
+btnInstall.onclick=()=>{
+  deferredPrompt.prompt();
+  deferredPrompt=null;
+  btnInstall.classList.add("hidden");
+};
 </script>
-
 </body>
   </html>
